@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item>
+        <shape android:shape="rectangle">
+            <corners 
+                android:bottomLeftRadius="@dimen/bg_rounded_corner_radius" 
+                android:bottomRightRadius="@dimen/bg_rounded_corner_radius" 
+                android:topLeftRadius="@dimen/bg_rounded_corner_radius" 
+                android:topRightRadius="@dimen/bg_rounded_corner_radius" />
+         			
+            <stroke 
+                android:width="@dimen/bg_rounded_outer_line_thickness" 
+                android:color="@color/strong_magenta" />
+            
+        </shape>
+	</item>
+
+</selector>

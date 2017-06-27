@@ -1,0 +1,621 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@color/white"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:id="@+id/layout_top"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:background="@color/clear"
+        android:baselineAligned="false"
+        android:orientation="horizontal" >
+
+        <Button
+            android:id="@+id/btn_cancel"
+            style="?android:attr/borderlessButtonStyle"
+            android:layout_width="0.0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:background="@color/clear"
+            android:baselineAligned="false"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:padding="12.0dp"
+            android:text="@string/cancel"
+            android:textColor="@color/dark_cyan"
+            android:textSize="12.0sp" />
+
+        <Button
+            android:id="@+id/btn_float_save"
+            style="?android:attr/borderlessButtonStyle"
+            android:layout_width="0.0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:background="@color/clear"
+            android:baselineAligned="false"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:padding="12.0dp"
+            android:text="@string/save"
+            android:textColor="@color/dark_cyan"
+            android:textSize="12.0sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="1.0px"
+        android:background="@color/dark_gray" />
+
+    <LinearLayout
+        android:id="@+id/layout_schedule_type"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:background="@color/clear"
+        android:baselineAligned="false"
+        android:orientation="horizontal" >
+
+        <RadioGroup
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginBottom="5.0dp"
+            android:layout_marginTop="5.0dp"
+            android:gravity="center"
+            android:orientation="horizontal" >
+
+            <RadioButton
+                android:id="@+id/rb_attendance"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginRight="5.0dp"
+                android:checked="true"
+                android:gravity="center"
+                android:text="@string/attendance"
+                android:textColor="@color/very_dark_gray"
+                android:textSize="12.0sp" />
+
+            <RadioButton
+                android:id="@+id/rb_course"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="5.0dp"
+                android:layout_marginRight="5.0dp"
+                android:gravity="center"
+                android:text="@string/static_text_course"
+                android:textColor="@color/very_dark_gray"
+                android:textSize="12.0sp" />
+
+            <RadioButton
+                android:id="@+id/rb_todo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="5.0dp"
+                android:layout_marginRight="5.0dp"
+                android:gravity="center"
+                android:text="@string/static_text_todo"
+                android:textColor="@color/very_dark_gray"
+                android:textSize="12.0sp" />
+
+            <RadioButton
+                android:id="@+id/rb_assignment"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="10.0dp"
+                android:layout_marginRight="10.0dp"
+                android:gravity="center"
+                android:text="@string/static_text_assignment"
+                android:textColor="@color/very_dark_gray"
+                android:textSize="12.0sp" />
+        </RadioGroup>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="1.0px"
+        android:background="@color/dark_gray" />
+
+    <LinearLayout
+        android:id="@+id/layout_schedule_title"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:background="@color/clear"
+        android:baselineAligned="false"
+        android:gravity="center"
+        android:orientation="horizontal" >
+
+        <EditText
+            android:id="@+id/edit_schedule_title"
+            android:layout_width="0.0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginBottom="5.0dp"
+            android:layout_marginLeft="10.0dp"
+            android:layout_marginRight="10.0dp"
+            android:layout_marginTop="5.0dp"
+            android:layout_weight="1"
+            android:background="@drawable/bg_outlined_white"
+            android:inputType="text"
+            android:maxLines="1"
+            android:paddingBottom="6.67dp"
+            android:paddingLeft="15.0dp"
+            android:paddingRight="15.0dp"
+            android:paddingTop="6.67dp"
+            android:singleLine="true"
+            android:textColor="@color/very_dark_gray"
+            android:textSize="12.0sp"
+            android:textStyle="normal" />
+
+        <Button
+            android:id="@+id/btn_select_assignment"
+            style="?android:attr/borderlessButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:background="@color/clear"
+            android:baselineAligned="false"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:text="@string/static_text_assignment"
+            android:textColor="@color/dark_cyan"
+            android:textSize="10.0sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="1.0px"
+        android:background="@color/dark_gray" />
+
+    <LinearLayout
+        android:id="@+id/layout_schedule_repeat"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:background="@color/clear"
+        android:baselineAligned="false"
+        android:gravity="center"
+        android:orientation="horizontal" >
+
+        <TextView
+            android:id="@+id/text_repeat_day_of_week"
+            android:layout_width="0.0dp"
+            android:layout_height="fill_parent"
+            android:layout_gravity="center"
+            android:layout_marginLeft="10.0dp"
+            android:layout_marginRight="10.0dp"
+            android:layout_marginTop="0.0dp"
+            android:layout_weight="1"
+            android:background="@color/clear"
+            android:gravity="center|start"
+            android:maxLines="1"
+            android:padding="0.0dp"
+            android:text="월 , 수, 금"
+            android:textColor="@color/very_dark_gray"
+            android:textSize="10.0dp" />
+
+        <Button
+            android:id="@+id/btn_repeat_day_of_week"
+            style="?android:attr/borderlessButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:background="@color/clear"
+            android:baselineAligned="false"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:text="@string/static_text_select_day_of_week"
+            android:textColor="@color/dark_cyan"
+            android:textSize="10.0sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="1.0px"
+        android:background="@color/dark_gray" />
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginBottom="5.0dp"
+        android:layout_marginTop="5.0dp"
+        android:background="@color/clear"
+        android:baselineAligned="false"
+        android:gravity="center"
+        android:orientation="horizontal" >
+
+        <TimePicker
+            android:id="@+id/time_picker"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:theme="@android:style/Theme.Holo.Light" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="1.0px"
+        android:background="@color/dark_gray" />
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginBottom="5.0dp"
+        android:layout_marginTop="5.0dp"
+        android:background="@color/clear"
+        android:baselineAligned="false"
+        android:orientation="horizontal" >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:background="@color/clear"
+            android:gravity="center"
+            android:maxLines="1"
+            android:padding="5.0dp"
+            android:text="@string/static_text_repeat_day_of_week"
+            android:textColor="@color/very_dark_gray"
+            android:textSize="12.0sp"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="1.0px"
+        android:background="@color/dark_gray" />
+
+    <LinearLayout
+        android:id="@+id/layout_week"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:background="@color/clear"
+        android:baselineAligned="false"
+        android:orientation="vertical"
+        android:paddingBottom="5.0dp"
+        android:paddingTop="5.0dp" >
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:background="@color/clear"
+            android:baselineAligned="false"
+            android:orientation="horizontal"
+            android:paddingBottom="00.0dp"
+            android:paddingTop="0.0dp" >
+
+            <LinearLayout
+                android:id="@+id/layout_sunday"
+                android:layout_width="0.0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:background="@color/clear"
+                android:baselineAligned="false"
+                android:orientation="vertical" >
+
+                <FrameLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:layout_gravity="center"
+                    android:background="@color/clear"
+                    android:baselineAligned="false"
+                    android:orientation="horizontal"
+                    android:paddingBottom="5.0dp"
+                    android:paddingTop="5.0dp" >
+
+                    <LinearLayout
+                        android:id="@+id/layout_sunday_selected"
+                        android:layout_width="@dimen/day_circle_radius"
+                        android:layout_height="@dimen/day_circle_radius"
+                        android:layout_gravity="center"
+                        android:background="@drawable/bg_ring_blue"
+                        android:orientation="horizontal"
+                        android:visibility="visible" />
+
+                    <TextView
+                        android:id="@+id/text_sunday"
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="0.0dp"
+                        android:background="@color/clear"
+                        android:gravity="center"
+                        android:maxLines="1"
+                        android:padding="0.0dp"
+                        android:text="@string/sunday"
+                        android:textColor="@color/red"
+                        android:textSize="@dimen/day_text_size_not_selected" />
+                </FrameLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/layout_monday"
+                android:layout_width="0.0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:background="@color/clear"
+                android:baselineAligned="false"
+                android:orientation="vertical" >
+
+                <FrameLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:layout_gravity="center"
+                    android:background="@color/clear"
+                    android:baselineAligned="false"
+                    android:orientation="horizontal"
+                    android:paddingBottom="5.0dp"
+                    android:paddingTop="5.0dp" >
+
+                    <LinearLayout
+                        android:id="@+id/layout_monday_selected"
+                        android:layout_width="@dimen/day_circle_radius"
+                        android:layout_height="@dimen/day_circle_radius"
+                        android:layout_gravity="center"
+                        android:background="@drawable/bg_ring_blue"
+                        android:orientation="horizontal"
+                        android:visibility="visible" />
+
+                    <TextView
+                        android:id="@+id/text_monday"
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="0.0dp"
+                        android:background="@color/clear"
+                        android:gravity="center"
+                        android:maxLines="1"
+                        android:padding="0.0dp"
+                        android:text="@string/monday"
+                        android:textColor="@color/very_dark_gray"
+                        android:textSize="@dimen/day_text_size_not_selected" />
+                </FrameLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/layout_tuesday"
+                android:layout_width="0.0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:background="@color/clear"
+                android:baselineAligned="false"
+                android:orientation="vertical" >
+
+                <FrameLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:layout_gravity="center"
+                    android:background="@color/clear"
+                    android:baselineAligned="false"
+                    android:orientation="horizontal"
+                    android:paddingBottom="5.0dp"
+                    android:paddingTop="5.0dp" >
+
+                    <LinearLayout
+                        android:id="@+id/layout_tuesday_selected"
+                        android:layout_width="@dimen/day_circle_radius"
+                        android:layout_height="@dimen/day_circle_radius"
+                        android:layout_gravity="center"
+                        android:background="@drawable/bg_ring_blue"
+                        android:orientation="horizontal"
+                        android:visibility="visible" />
+
+                    <TextView
+                        android:id="@+id/text_tuesday"
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="0.0dp"
+                        android:background="@color/clear"
+                        android:gravity="center"
+                        android:maxLines="1"
+                        android:padding="0.0dp"
+                        android:text="@string/tuesday"
+                        android:textColor="@color/very_dark_gray"
+                        android:textSize="@dimen/day_text_size_not_selected" />
+                </FrameLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/layout_wendesday"
+                android:layout_width="0.0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:background="@color/clear"
+                android:baselineAligned="false"
+                android:orientation="vertical" >
+
+                <FrameLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:layout_gravity="center"
+                    android:background="@color/clear"
+                    android:baselineAligned="false"
+                    android:orientation="horizontal"
+                    android:paddingBottom="5.0dp"
+                    android:paddingTop="5.0dp" >
+
+                    <LinearLayout
+                        android:id="@+id/layout_wendesday_selected"
+                        android:layout_width="@dimen/day_circle_radius"
+                        android:layout_height="@dimen/day_circle_radius"
+                        android:layout_gravity="center"
+                        android:background="@drawable/bg_ring_blue"
+                        android:orientation="horizontal"
+                        android:visibility="visible" />
+
+                    <TextView
+                        android:id="@+id/text_wendesday"
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="0.0dp"
+                        android:background="@color/clear"
+                        android:gravity="center"
+                        android:maxLines="1"
+                        android:padding="0.0dp"
+                        android:text="@string/wednesday"
+                        android:textColor="@color/very_dark_gray"
+                        android:textSize="@dimen/day_text_size_not_selected" />
+                </FrameLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/layout_thursday"
+                android:layout_width="0.0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:background="@color/clear"
+                android:baselineAligned="false"
+                android:orientation="vertical" >
+
+                <FrameLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:layout_gravity="center"
+                    android:background="@color/clear"
+                    android:baselineAligned="false"
+                    android:orientation="horizontal"
+                    android:paddingBottom="5.0dp"
+                    android:paddingTop="5.0dp" >
+
+                    <LinearLayout
+                        android:id="@+id/layout_thursday_selected"
+                        android:layout_width="@dimen/day_circle_radius"
+                        android:layout_height="@dimen/day_circle_radius"
+                        android:layout_gravity="center"
+                        android:background="@drawable/bg_ring_blue"
+                        android:orientation="horizontal"
+                        android:visibility="visible" />
+
+                    <TextView
+                        android:id="@+id/text_thursday"
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="0.0dp"
+                        android:background="@color/clear"
+                        android:gravity="center"
+                        android:maxLines="1"
+                        android:padding="0.0dp"
+                        android:text="@string/thursday"
+                        android:textColor="@color/very_dark_gray"
+                        android:textSize="@dimen/day_text_size_not_selected" />
+                </FrameLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/layout_friday"
+                android:layout_width="0.0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:background="@color/clear"
+                android:baselineAligned="false"
+                android:orientation="vertical" >
+
+                <FrameLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:layout_gravity="center"
+                    android:background="@color/clear"
+                    android:baselineAligned="false"
+                    android:orientation="horizontal"
+                    android:paddingBottom="5.0dp"
+                    android:paddingTop="5.0dp" >
+
+                    <LinearLayout
+                        android:id="@+id/layout_friday_selected"
+                        android:layout_width="@dimen/day_circle_radius"
+                        android:layout_height="@dimen/day_circle_radius"
+                        android:layout_gravity="center"
+                        android:background="@drawable/bg_ring_blue"
+                        android:orientation="horizontal"
+                        android:visibility="visible" />
+
+                    <TextView
+                        android:id="@+id/text_friday"
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="0.0dp"
+                        android:background="@color/clear"
+                        android:gravity="center"
+                        android:maxLines="1"
+                        android:padding="0.0dp"
+                        android:text="@string/friday"
+                        android:textColor="@color/very_dark_gray"
+                        android:textSize="@dimen/day_text_size_not_selected" />
+                </FrameLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/layout_satday"
+                android:layout_width="0.0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:background="@color/clear"
+                android:baselineAligned="false"
+                android:orientation="vertical" >
+
+                <FrameLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:layout_gravity="center"
+                    android:background="@color/clear"
+                    android:baselineAligned="false"
+                    android:orientation="horizontal"
+                    android:paddingBottom="5.0dp"
+                    android:paddingTop="5.0dp" >
+
+                    <LinearLayout
+                        android:id="@+id/layout_satday_selected"
+                        android:layout_width="@dimen/day_circle_radius"
+                        android:layout_height="@dimen/day_circle_radius"
+                        android:layout_gravity="center"
+                        android:background="@drawable/bg_ring_blue"
+                        android:orientation="horizontal"
+                        android:visibility="visible" />
+
+                    <TextView
+                        android:id="@+id/text_satday"
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="0.0dp"
+                        android:background="@color/clear"
+                        android:gravity="center"
+                        android:maxLines="1"
+                        android:padding="0.0dp"
+                        android:text="@string/saturday"
+                        android:textColor="@color/blue"
+                        android:textSize="@dimen/day_text_size_not_selected" />
+                </FrameLayout>
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="1.0px"
+        android:background="@color/dark_gray" />
+
+</LinearLayout>

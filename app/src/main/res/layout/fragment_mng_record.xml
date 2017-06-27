@@ -1,0 +1,414 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_white">
+
+    <TextView
+        android:id="@+id/txt_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="12dp"
+        android:layout_marginTop="30dp"
+        android:gravity="center"
+        android:text="Title"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="13dp" />
+<RelativeLayout
+    android:layout_marginLeft="-19dp"
+    android:layout_marginRight="19dp"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <!-- 상단 지표 START-->
+    <LinearLayout
+        android:id="@+id/graph_top_label"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="30dp"
+        android:gravity="center_vertical|right"
+        android:orientation="horizontal">
+
+
+        <View
+            android:layout_width="20dp"
+            android:layout_height="10dp"
+            android:background="@color/color_my_score_detail" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="3dp"
+            android:text="@string/my_score"
+            android:textColor="@color/color_text_black"
+            android:textSize="10dp" />
+
+        <View
+            android:layout_width="20dp"
+            android:layout_height="10dp"
+            android:layout_marginLeft="10dp"
+            android:background="@color/color_overall_av_detail" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:text="@string/overall_av"
+            android:textColor="@color/color_text_black"
+            android:textSize="10dp" />
+
+
+    </LinearLayout>
+    <!-- 상단 지표 END-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/graph_top_label"
+        android:layout_marginBottom="60dp"
+        android:layout_marginLeft="80dp"
+        android:layout_marginRight="35dp"
+        android:layout_marginTop="20dp"
+        android:orientation="vertical">
+        <LinearLayout
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="0dp">
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="0dp">
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:background="@color/color_skyblue" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="0dp">
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:background="@color/color_skyblue" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="0dp">
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:background="@color/color_skyblue" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="0dp">
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:background="@color/color_skyblue" />
+        </LinearLayout>
+
+    </LinearLayout>
+    <!-- 그래프 base START-->
+    <LinearLayout
+        android:id="@+id/layout_graph_details"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/graph_top_label"
+        android:layout_marginBottom="60dp"
+        android:layout_marginLeft="80dp"
+        android:layout_marginRight="35dp"
+        android:layout_marginTop="20dp"
+        android:orientation="horizontal">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+
+            <View
+                android:layout_width="0.5dp"
+                android:layout_height="match_parent"
+                android:background="@color/color_graph_gray" />
+
+            <View
+                android:id="@+id/view_my_graph1"
+                android:elevation="1dp"
+                android:layout_alignParentBottom="true"
+                android:layout_width="10dp"
+                android:layout_height="100dp"
+                android:background="@color/color_my_score_detail"
+                android:layout_marginLeft="12dp"/>
+
+            <View
+                android:id="@+id/view_av_graph1"
+                android:layout_alignParentRight="true"
+                android:elevation="1dp"
+                android:layout_alignParentBottom="true"
+                android:layout_width="10dp"
+                android:layout_height="100dp"
+                android:background="@color/color_overall_av_detail"
+                android:layout_marginRight="12dp"/>
+
+
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+
+            <View
+                android:layout_width="0.5dp"
+                android:layout_height="match_parent"
+                android:background="@color/color_graph_gray" />
+            <View
+                android:id="@+id/view_my_graph2"
+                android:elevation="1dp"
+                android:layout_alignParentBottom="true"
+                android:layout_width="10dp"
+                android:layout_height="100dp"
+                android:background="@color/color_my_score_detail"
+                android:layout_marginLeft="12dp"/>
+
+            <View
+                android:id="@+id/view_av_graph2"
+                android:layout_alignParentRight="true"
+                android:elevation="1dp"
+                android:layout_alignParentBottom="true"
+                android:layout_width="10dp"
+                android:layout_height="100dp"
+                android:background="@color/color_overall_av_detail"
+                android:layout_marginRight="12dp"/>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+
+            <View
+                android:layout_width="0.5dp"
+                android:layout_height="match_parent"
+                android:background="@color/color_graph_gray" />
+            <View
+                android:id="@+id/view_my_graph3"
+                android:elevation="1dp"
+                android:layout_alignParentBottom="true"
+                android:layout_width="10dp"
+                android:layout_height="100dp"
+                android:background="@color/color_my_score_detail"
+                android:layout_marginLeft="12dp"/>
+
+            <View
+                android:id="@+id/view_av_graph3"
+                android:layout_alignParentRight="true"
+                android:elevation="1dp"
+                android:layout_alignParentBottom="true"
+                android:layout_width="10dp"
+                android:layout_height="100dp"
+                android:background="@color/color_overall_av_detail"
+                android:layout_marginRight="12dp"/>
+
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+
+            <View
+                android:layout_width="0.5dp"
+                android:layout_height="match_parent"
+                android:background="@color/color_graph_gray" />
+            <View
+                android:id="@+id/view_my_graph4"
+                android:elevation="1dp"
+                android:layout_alignParentBottom="true"
+                android:layout_width="10dp"
+                android:layout_height="100dp"
+                android:background="@color/color_my_score_detail"
+                android:layout_marginLeft="12dp"/>
+
+            <View
+                android:id="@+id/view_av_graph4"
+                android:layout_alignParentRight="true"
+                android:elevation="1dp"
+                android:layout_alignParentBottom="true"
+                android:layout_width="10dp"
+                android:layout_height="100dp"
+                android:background="@color/color_overall_av_detail"
+                android:layout_marginRight="12dp"/>
+
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+
+            <View
+                android:layout_width="0.5dp"
+                android:layout_height="match_parent"
+                android:background="@color/color_graph_gray" />
+            <View
+                android:id="@+id/view_my_graph5"
+                android:elevation="1dp"
+                android:layout_alignParentBottom="true"
+                android:layout_width="10dp"
+                android:layout_height="100dp"
+                android:background="@color/color_my_score_detail"
+                android:layout_marginLeft="12dp"/>
+
+            <View
+                android:id="@+id/view_av_graph5"
+                android:layout_alignParentRight="true"
+                android:elevation="1dp"
+                android:layout_alignParentBottom="true"
+                android:layout_width="10dp"
+                android:layout_height="100dp"
+                android:background="@color/color_overall_av_detail"
+                android:layout_marginRight="12dp"/>
+
+
+        </RelativeLayout>
+
+
+        <View
+            android:layout_width="0.5dp"
+            android:layout_height="match_parent"
+            android:background="@color/color_graph_gray" />
+
+    </LinearLayout>
+    <!-- 그래프 base END-->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="60dp"
+        android:layout_marginLeft="80dp"
+        android:layout_marginRight="35dp"
+        android:background="@color/color_graph_gray" />
+    <!-- 그래프 하단 지표 START -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="50dp"
+        android:layout_marginLeft="80dp"
+        android:layout_marginRight="30dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/txt_graph_value_month1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="2016.11"
+            android:textColor="@color/color_text_black"
+            android:textSize="8dp" />
+
+        <TextView
+            android:id="@+id/txt_graph_value_month2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="2016.11"
+            android:textColor="@color/color_text_black"
+            android:textSize="8dp" />
+
+        <TextView
+            android:id="@+id/txt_graph_value_month3"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="2016.11"
+            android:textColor="@color/color_text_black"
+            android:textSize="8dp" />
+
+        <TextView
+            android:id="@+id/txt_graph_value_month4"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="2016.11"
+            android:textColor="@color/color_text_black"
+            android:textSize="8dp" />
+
+        <TextView
+            android:id="@+id/txt_graph_value_month5"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="2016.11"
+            android:textColor="@color/color_text_black"
+            android:textSize="8dp" />
+
+    </LinearLayout>
+    <!-- 그래프 하단 지표 END -->
+
+    <!-- 그래프 좌측 지표 START -->
+    <LinearLayout
+        android:layout_below="@id/graph_top_label"
+        android:layout_marginBottom="56dp"
+        android:layout_marginLeft="60dp"
+        android:layout_marginTop="26dp"
+        android:layout_width="18dp"
+        android:layout_height="match_parent"
+        android:gravity="right"
+        android:orientation="vertical">
+
+        <TextView
+            android:gravity="bottom"
+            android:layout_weight="1"
+            android:text="100"
+            android:textSize="8dp"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp" />
+        <TextView
+            android:gravity="bottom"
+            android:layout_weight="1"
+            android:text="75"
+            android:textSize="8dp"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp" />
+        <TextView
+            android:gravity="bottom"
+            android:layout_weight="1"
+            android:text="50"
+            android:textSize="8dp"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp" />
+        <TextView
+            android:gravity="bottom"
+            android:layout_weight="1"
+            android:text="25"
+            android:textSize="8dp"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp" />
+        <TextView
+            android:gravity="bottom"
+            android:layout_weight="1"
+            android:text="0"
+            android:textSize="8dp"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp" />
+    </LinearLayout>
+    <!-- 그래프 좌측 지표 END -->
+</RelativeLayout>
+</RelativeLayout>

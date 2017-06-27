@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_centerInParent="true"
+        android:background="@color/color_white"
+        android:layout_width="320dp"
+        android:layout_height="300dp"
+        android:orientation="vertical">
+
+
+        <TextView
+            android:id="@+id/txt_dialog_title"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:gravity="center"
+            android:text="@string/input_score"
+            android:textColor="@color/color_text_medium_gray"
+            android:textSize="20dp" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="@color/color_action_bar_background" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="20dp"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_weight="0.5"
+                android:gravity="center"
+                android:textSize="24dp"
+                android:id="@+id/txt_dialog_date"
+                android:textColor="@color/color_text_medium_gray"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp" />
+            <TextView
+                android:id="@+id/txt_dialog_contents"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="0.5"
+                android:gravity="center"
+                android:text="@string/my_score_question"
+                android:textColor="@color/color_text_medium_gray"
+                android:textSize="15dp" />
+
+            <LinearLayout
+                android:layout_marginBottom="20dp"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <EditText
+                    style="@style/EditTextStyle"
+                    android:id="@+id/edit_dialog_score"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:digits="0123456789"
+                    android:gravity="center_horizontal"
+                    android:hint="0"
+                    android:maxLength="3"
+                    android:selectAllOnFocus="true"
+                    android:inputType="number"
+                    android:textColor="@color/color_text_red"
+                    android:textSize="40dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/point"
+                    android:textColor="@color/color_text_black"
+                    android:textSize="32dp" />
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="3dp"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/btn_ok"
+                    android:layout_width="0dp"
+                    android:layout_height="40dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/shape_button_blue"
+                    android:text="@string/ok"
+                    android:textColor="@color/color_text_white"
+                    android:textSize="13dp" />
+
+                <Button
+                    android:id="@+id/btn_cancel"
+                    android:layout_width="0dp"
+                    android:layout_height="40dp"
+                    android:layout_marginLeft="5dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/shape_button_blue"
+                    android:text="@string/cancel"
+                    android:textColor="@color/color_text_white"
+                    android:textSize="13dp" />
+
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+
+    <ImageView
+        android:elevation="2dp"
+        android:id="@+id/img_loading"
+        android:layout_width="320dp"
+        android:layout_height="300dp"
+        android:layout_centerInParent="true"
+        android:src="@drawable/loading_anim"
+        android:scaleType="centerInside"
+        android:clickable="true"
+        android:background="@color/color_translate_gray"
+        android:contentDescription="@string/app_name" />
+
+</RelativeLayout>

@@ -1,0 +1,1343 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_background"
+    android:orientation="vertical">
+
+    <ScrollView
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <!-- 상단부 등급 및 아이콘 표시 START -->
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="70dp"
+                android:background="@color/color_white">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="20dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/txt_my_grade"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="3dp"
+                        android:text="새싹2등급"
+                        android:textColor="@color/color_text_black"
+                        android:textSize="15dp" />
+
+                    <TextView
+                        android:id="@+id/txt_learing_period"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="학습기간:6개월/3번째 공부 시스템 개발중"
+                        android:textColor="@color/color_text_black"
+                        android:textSize="12dp" />
+                </LinearLayout>
+
+                <ImageView
+                    android:id="@+id/img_targettree"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="20dp"
+                    android:clickable="true"
+                    android:src="@drawable/tree" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginRight="22dp"
+                    android:src="@drawable/btn_tree_qmark" />
+
+            </RelativeLayout>
+            <!-- 상단부 등급 및 아이콘 표시 END -->
+
+            <!--주차 별 점수 입력 START-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="5dp"
+                android:background="@color/color_white"
+                android:orientation="vertical">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/color_white">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="20dp"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/txt_gugongc_month"
+                            android:layout_width="wrap_content"
+                            android:layout_height="35dp"
+                            android:gravity="center"
+                            android:text="@string/my_gugongc_month"
+                            android:textColor="@color/color_text_gray"
+                            android:textSize="12dp" />
+
+                        <TextView
+                            android:id="@+id/text_target"
+                            android:layout_width="210dp"
+                            android:layout_height="35dp"
+                            android:background="@drawable/shape_rect_black"
+                            android:clickable="true"
+                            android:focusable="true"
+                            android:gravity="left|center_vertical"
+                            android:onClick="onClick"
+                            android:paddingLeft="10dp"
+                            android:text="수업 후 복습 10분하기"
+                            android:textColor="@color/color_text_skyblue"
+                            android:textSize="16dp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="20dp"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="20dp"
+                            android:layout_marginTop="10dp"
+                            android:gravity="center_vertical"
+                            android:text="@string/overall_av_score"
+                            android:textColor="@color/color_text_red"
+                            android:textSize="15dp" />
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center|bottom"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:id="@+id/txt_my_score"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="5dp"
+                                android:text="80"
+                                android:textColor="@color/color_text_red"
+                                android:textSize="26dp" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginBottom="2dp"
+                                android:text="@string/point"
+                                android:textColor="@color/color_text_red"
+                                android:textSize="16dp" />
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                    <!-- 채점 및 확인 영역 -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"></LinearLayout>
+
+
+                </RelativeLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:background="@color/color_white"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingTop="10dp">
+
+                    <TextView
+                        android:id="@+id/txt_start_date"
+                        android:layout_width="wrap_content"
+                        android:layout_height="20dp"
+                        android:layout_marginLeft="20dp"
+                        android:text="2017년 4월 3일"
+                        android:textColor="@color/color_text_medium_gray"
+                        android:textSize="16dp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="20dp"
+                        android:layout_marginLeft="5dp"
+                        android:text="@string/start"
+                        android:textColor="@color/color_text_medium_gray"
+                        android:textSize="16dp" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginRight="20dp"
+                        android:background="@color/color_common_gray" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="220dp"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:orientation="horizontal">
+
+                    <GridView
+                        android:id="@+id/calendar"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="7"
+                        android:numColumns="7">
+
+                    </GridView>
+
+                    <GridView
+                        android:id="@+id/confirm"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2"
+                        android:numColumns="2"></GridView>
+                </LinearLayout>
+                <!--<LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="185dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginTop="10dp"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="horizontal">
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="35dp"
+                                android:layout_height="35dp"
+                                android:background="@drawable/shape_oval_gray"
+                                android:gravity="center"
+                                android:text="@string/week_1"
+                                android:textColor="@color/color_text_white"
+                                android:textSize="12dp" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:id="@+id/txt_my_score_1_1"
+                                android:layout_width="35dp"
+                                android:layout_height="35dp"
+                                android:background="@drawable/shape_ring_gray"
+                                android:gravity="center"
+                                android:textColor="@color/color_text_darkgray"
+                                android:textSize="13dp" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:id="@+id/txt_my_score_1_2"
+                                android:layout_width="35dp"
+                                android:layout_height="35dp"
+                                android:background="@drawable/shape_ring_gray"
+                                android:gravity="center"
+                                android:textColor="@color/color_text_darkgray"
+                                android:textSize="13dp" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:id="@+id/txt_my_score_1_3"
+                                android:layout_width="35dp"
+                                android:layout_height="35dp"
+                                android:background="@drawable/shape_ring_gray"
+                                android:gravity="center"
+                                android:textColor="@color/color_text_darkgray"
+                                android:textSize="13dp" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:id="@+id/txt_my_score_1_4"
+                                android:layout_width="35dp"
+                                android:layout_height="35dp"
+                                android:background="@drawable/shape_ring_gray"
+                                android:gravity="center"
+                                android:textColor="@color/color_text_darkgray"
+                                android:textSize="13dp" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:id="@+id/txt_my_score_1_5"
+                                android:layout_width="35dp"
+                                android:layout_height="35dp"
+                                android:background="@drawable/shape_ring_gray"
+                                android:gravity="center"
+                                android:textColor="@color/color_text_darkgray"
+                                android:textSize="13dp" />
+                        </LinearLayout>
+
+                        <RelativeLayout
+                            android:id="@+id/layout_my_score_1_1"
+                            android:clickable="true"
+                            android:onClick="onClick"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="center">
+
+                            <ImageView
+                                android:id="@+id/img_my_score_1_1"
+                                android:layout_width="35dp"
+                                android:layout_height="35dp"
+                                android:background="@drawable/shape_rect_blue"
+                                android:gravity="center"
+                                android:padding="5dp"
+                                android:src="@drawable/ic_hand"
+                                android:visibility="gone" />
+
+                            <TextView
+                                android:id="@+id/txt_my_score_1_6"
+                                android:layout_width="35dp"
+                                android:layout_height="35dp"
+                                android:background="@drawable/shape_rect_gray"
+                                android:gravity="center"
+                                android:text="T"
+                                android:textColor="@color/color_graph_gray"
+                                android:textSize="15dp"
+                                android:visibility="visible" />
+                        </RelativeLayout>
+
+                        <RelativeLayout
+                            android:id="@+id/layout_my_score_1_2"
+                            android:onClick="onClick"
+                            android:clickable="true"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="center">
+
+                            <ImageView
+                                android:id="@+id/img_my_score_1_2"
+                                android:layout_width="35dp"
+                                android:layout_height="35dp"
+                                android:background="@drawable/shape_rect_blue"
+                                android:gravity="center"
+                                android:padding="5dp"
+                                android:src="@drawable/ic_hand"
+                                android:visibility="gone" />
+
+                            <TextView
+                                android:id="@+id/txt_my_score_1_7"
+                                android:layout_width="35dp"
+                                android:layout_height="35dp"
+                                android:background="@drawable/shape_rect_gray"
+                                android:gravity="center"
+                                android:text="P"
+                                android:textColor="@color/color_graph_gray"
+                                android:textSize="15dp"
+                                android:visibility="visible" />
+                        </RelativeLayout>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="horizontal">
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="35dp"
+                                android:layout_height="35dp"
+                                android:background="@drawable/shape_oval_gray"
+                                android:gravity="center"
+                                android:text="@string/week_2"
+                                android:textColor="@color/color_text_white"
+                                android:textSize="12dp" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:id="@+id/txt_my_score_2_1"
+                                android:layout_width="35dp"
+                                android:layout_height="35dp"
+                                android:background="@drawable/shape_ring_gray"
+                                android:gravity="center"
+                                android:textColor="@color/color_text_darkgray"
+                                android:textSize="13dp" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:id="@+id/txt_my_score_2_2"
+                                android:layout_width="35dp"
+                                android:layout_height="35dp"
+                                android:background="@drawable/shape_ring_gray"
+                                android:gravity="center"
+                                android:textColor="@color/color_text_darkgray"
+                                android:textSize="13dp" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:id="@+id/txt_my_score_2_3"
+                                android:layout_width="35dp"
+                                android:layout_height="35dp"
+                                android:background="@drawable/shape_ring_gray"
+                                android:gravity="center"
+                                android:textColor="@color/color_text_darkgray"
+                                android:textSize="13dp" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:id="@+id/txt_my_score_2_4"
+                                android:layout_width="35dp"
+                                android:layout_height="35dp"
+                                android:background="@drawable/shape_ring_gray"
+                                android:gravity="center"
+                                android:textColor="@color/color_text_darkgray"
+                                android:textSize="13dp" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:id="@+id/txt_my_score_2_5"
+                                android:layout_width="35dp"
+                                android:layout_height="35dp"
+                                android:background="@drawable/shape_ring_gray"
+                                android:gravity="center"
+                                android:textColor="@color/color_text_darkgray"
+                                android:textSize="13dp" />
+                        </LinearLayout>
+
+                        <RelativeLayout
+                            android:id="@+id/layout_my_score_2_1"
+                            android:clickable="true"
+                            android:onClick="onClick"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="center">
+
+                            <ImageView
+                                android:id="@+id/img_my_score_2_1"
+                                android:layout_width="35dp"
+                                android:layout_height="35dp"
+                                android:background="@drawable/shape_rect_blue"
+                                android:gravity="center"
+                                android:padding="5dp"
+                                android:src="@drawable/ic_hand"
+                                android:visibility="gone" />
+
+                            <TextView
+                                android:id="@+id/txt_my_score_2_6"
+                                android:layout_width="35dp"
+                                android:layout_height="35dp"
+                                android:background="@drawable/shape_rect_gray"
+                                android:gravity="center"
+                                android:text="T"
+                                android:textColor="@color/color_graph_gray"
+                                android:textSize="15dp"
+                                android:visibility="visible" />
+                        </RelativeLayout>
+
+                        <RelativeLayout
+                            android:id="@+id/layout_my_score_2_2"
+                            android:clickable="true"
+                            android:onClick="onClick"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="center">
+
+                            <ImageView
+                                android:id="@+id/img_my_score_2_2"
+                                android:layout_width="35dp"
+                                android:layout_height="35dp"
+                                android:background="@drawable/shape_rect_blue"
+                                android:gravity="center"
+                                android:padding="5dp"
+                                android:src="@drawable/ic_hand"
+                                android:visibility="gone" />
+
+                            <TextView
+                                android:id="@+id/txt_my_score_2_7"
+                                android:layout_width="35dp"
+                                android:layout_height="35dp"
+                                android:background="@drawable/shape_rect_gray"
+                                android:gravity="center"
+                                android:text="P"
+                                android:textColor="@color/color_graph_gray"
+                                android:textSize="15dp"
+                                android:visibility="visible" />
+                        </RelativeLayout>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="horizontal">
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="35dp"
+                                android:layout_height="35dp"
+                                android:background="@drawable/shape_oval_gray"
+                                android:gravity="center"
+                                android:text="@string/week_3"
+                                android:textColor="@color/color_text_white"
+                                android:textSize="12dp" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:id="@+id/txt_my_score_3_1"
+                                android:layout_width="35dp"
+                                android:layout_height="35dp"
+                                android:background="@drawable/shape_ring_gray"
+                                android:gravity="center"
+                                android:textColor="@color/color_text_darkgray"
+                                android:textSize="13dp" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:id="@+id/txt_my_score_3_2"
+                                android:layout_width="35dp"
+                                android:layout_height="35dp"
+                                android:background="@drawable/shape_ring_gray"
+                                android:gravity="center"
+                                android:textColor="@color/color_text_darkgray"
+                                android:textSize="13dp" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:id="@+id/txt_my_score_3_3"
+                                android:layout_width="35dp"
+                                android:layout_height="35dp"
+                                android:background="@drawable/shape_ring_gray"
+                                android:gravity="center"
+                                android:textColor="@color/color_text_darkgray"
+                                android:textSize="13dp" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:id="@+id/txt_my_score_3_4"
+                                android:layout_width="35dp"
+                                android:layout_height="35dp"
+                                android:background="@drawable/shape_ring_gray"
+                                android:gravity="center"
+                                android:textColor="@color/color_text_darkgray"
+                                android:textSize="13dp" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:id="@+id/txt_my_score_3_5"
+                                android:layout_width="35dp"
+                                android:layout_height="35dp"
+                                android:background="@drawable/shape_ring_gray"
+                                android:gravity="center"
+                                android:textColor="@color/color_text_darkgray"
+                                android:textSize="13dp" />
+                        </LinearLayout>
+
+                        <RelativeLayout
+                            android:id="@+id/layout_my_score_3_1"
+                            android:clickable="true"
+                            android:onClick="onClick"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="center">
+
+                            <ImageView
+                                android:id="@+id/img_my_score_3_1"
+                                android:layout_width="35dp"
+                                android:layout_height="35dp"
+                                android:background="@drawable/shape_rect_blue"
+                                android:gravity="center"
+                                android:padding="5dp"
+                                android:src="@drawable/ic_hand"
+                                android:visibility="gone" />
+
+                            <TextView
+                                android:id="@+id/txt_my_score_3_6"
+                                android:layout_width="35dp"
+                                android:layout_height="35dp"
+                                android:background="@drawable/shape_rect_gray"
+                                android:gravity="center"
+                                android:text="T"
+                                android:textColor="@color/color_graph_gray"
+                                android:textSize="15dp"
+                                android:visibility="visible" />
+                        </RelativeLayout>
+
+                        <RelativeLayout
+                            android:id="@+id/layout_my_score_3_2"
+                            android:clickable="true"
+                            android:onClick="onClick"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="center">
+
+                            <ImageView
+                                android:id="@+id/img_my_score_3_2"
+                                android:layout_width="35dp"
+                                android:layout_height="35dp"
+                                android:background="@drawable/shape_rect_blue"
+                                android:gravity="center"
+                                android:padding="5dp"
+                                android:src="@drawable/ic_hand"
+                                android:visibility="gone" />
+
+                            <TextView
+                                android:id="@+id/txt_my_score_3_7"
+                                android:layout_width="35dp"
+                                android:layout_height="35dp"
+                                android:background="@drawable/shape_rect_gray"
+                                android:gravity="center"
+                                android:text="P"
+                                android:textColor="@color/color_graph_gray"
+                                android:textSize="15dp"
+                                android:visibility="visible" />
+                        </RelativeLayout>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="horizontal">
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="35dp"
+                                android:layout_height="35dp"
+                                android:background="@drawable/shape_oval_gray"
+                                android:gravity="center"
+                                android:text="@string/week_4"
+                                android:textColor="@color/color_text_white"
+                                android:textSize="12dp" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:id="@+id/txt_my_score_4_1"
+                                android:layout_width="35dp"
+                                android:layout_height="35dp"
+                                android:background="@drawable/shape_ring_gray"
+                                android:gravity="center"
+                                android:textColor="@color/color_text_darkgray"
+                                android:textSize="13dp" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:id="@+id/txt_my_score_4_2"
+                                android:layout_width="35dp"
+                                android:layout_height="35dp"
+                                android:background="@drawable/shape_ring_gray"
+                                android:gravity="center"
+                                android:textColor="@color/color_text_darkgray"
+                                android:textSize="13dp" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:id="@+id/txt_my_score_4_3"
+                                android:layout_width="35dp"
+                                android:layout_height="35dp"
+                                android:background="@drawable/shape_ring_gray"
+                                android:gravity="center"
+                                android:textColor="@color/color_text_darkgray"
+                                android:textSize="13dp" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:id="@+id/txt_my_score_4_4"
+                                android:layout_width="35dp"
+                                android:layout_height="35dp"
+                                android:background="@drawable/shape_ring_gray"
+                                android:gravity="center"
+                                android:textColor="@color/color_text_darkgray"
+                                android:textSize="13dp" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:id="@+id/txt_my_score_4_5"
+                                android:layout_width="35dp"
+                                android:layout_height="35dp"
+                                android:background="@drawable/shape_ring_gray"
+                                android:gravity="center"
+                                android:textColor="@color/color_text_darkgray"
+                                android:textSize="13dp" />
+                        </LinearLayout>
+
+                        <RelativeLayout
+                            android:id="@+id/layout_my_score_4_1"
+                            android:clickable="true"
+                            android:onClick="onClick"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="center">
+
+                            <ImageView
+                                android:id="@+id/img_my_score_4_1"
+                                android:layout_width="35dp"
+                                android:layout_height="35dp"
+                                android:background="@drawable/shape_rect_blue"
+                                android:gravity="center"
+                                android:padding="5dp"
+                                android:src="@drawable/ic_hand"
+                                android:visibility="gone" />
+
+                            <TextView
+                                android:id="@+id/txt_my_score_4_6"
+                                android:layout_width="35dp"
+                                android:layout_height="35dp"
+                                android:background="@drawable/shape_rect_gray"
+                                android:gravity="center"
+                                android:text="T"
+                                android:textColor="@color/color_graph_gray"
+                                android:textSize="15dp"
+                                android:visibility="visible" />
+                        </RelativeLayout>
+
+                        <RelativeLayout
+                            android:id="@+id/layout_my_score_4_2"
+                            android:clickable="true"
+                            android:onClick="onClick"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="center">
+
+                            <ImageView
+                                android:id="@+id/img_my_score_4_2"
+                                android:layout_width="35dp"
+                                android:layout_height="35dp"
+                                android:background="@drawable/shape_rect_blue"
+                                android:gravity="center"
+                                android:padding="5dp"
+                                android:src="@drawable/ic_hand"
+                                android:visibility="gone" />
+
+                            <TextView
+                                android:id="@+id/txt_my_score_4_7"
+                                android:layout_width="35dp"
+                                android:layout_height="35dp"
+                                android:background="@drawable/shape_rect_gray"
+                                android:gravity="center"
+                                android:text="P"
+                                android:textColor="@color/color_graph_gray"
+                                android:textSize="15dp"
+                                android:visibility="visible" />
+                        </RelativeLayout>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/layout_target_tree_5"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="horizontal"
+                        android:visibility="visible">
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="35dp"
+                                android:layout_height="35dp"
+                                android:background="@drawable/shape_oval_gray"
+                                android:gravity="center"
+                                android:text="@string/week_5"
+                                android:textColor="@color/color_text_white"
+                                android:textSize="12dp" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:id="@+id/txt_my_score_5_1"
+                                android:layout_width="35dp"
+                                android:layout_height="35dp"
+                                android:background="@drawable/shape_ring_gray"
+                                android:gravity="center"
+                                android:textColor="@color/color_text_darkgray"
+                                android:textSize="13dp" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:id="@+id/txt_my_score_5_2"
+                                android:layout_width="35dp"
+                                android:layout_height="35dp"
+                                android:background="@drawable/shape_ring_gray"
+                                android:gravity="center"
+                                android:textColor="@color/color_text_darkgray"
+                                android:textSize="13dp" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:id="@+id/txt_my_score_5_3"
+                                android:layout_width="35dp"
+                                android:layout_height="35dp"
+                                android:background="@drawable/shape_ring_gray"
+                                android:gravity="center"
+                                android:textColor="@color/color_text_darkgray"
+                                android:textSize="13dp" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:id="@+id/txt_my_score_5_4"
+                                android:layout_width="35dp"
+                                android:layout_height="35dp"
+                                android:background="@drawable/shape_ring_gray"
+                                android:gravity="center"
+                                android:textColor="@color/color_text_darkgray"
+                                android:textSize="13dp" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:id="@+id/txt_my_score_5_5"
+                                android:layout_width="35dp"
+                                android:layout_height="35dp"
+                                android:background="@drawable/shape_ring_gray"
+                                android:gravity="center"
+                                android:textColor="@color/color_text_darkgray"
+                                android:textSize="13dp" />
+                        </LinearLayout>
+
+                        <RelativeLayout
+                            android:id="@+id/layout_my_score_5_1"
+                            android:clickable="true"
+                            android:onClick="onClick"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="center">
+
+                            <ImageView
+                                android:id="@+id/img_my_score_5_1"
+                                android:layout_width="35dp"
+                                android:layout_height="35dp"
+                                android:background="@drawable/shape_rect_blue"
+                                android:gravity="center"
+                                android:padding="5dp"
+                                android:src="@drawable/ic_hand"
+                                android:visibility="invisible" />
+
+                            <TextView
+                                android:id="@+id/txt_my_score_5_6"
+                                android:layout_width="35dp"
+                                android:layout_height="35dp"
+                                android:background="@drawable/shape_rect_gray"
+                                android:gravity="center"
+                                android:text="T"
+                                android:textColor="@color/color_graph_gray"
+                                android:textSize="15dp"
+                                android:visibility="visible" />
+                        </RelativeLayout>
+
+                        <RelativeLayout
+                            android:id="@+id/layout_my_score_5_2"
+                            android:clickable="true"
+                            android:onClick="onClick"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="center">
+
+                            <ImageView
+                                android:id="@+id/img_my_score_5_2"
+                                android:layout_width="35dp"
+                                android:layout_height="35dp"
+                                android:background="@drawable/shape_rect_blue"
+                                android:gravity="center"
+                                android:padding="5dp"
+                                android:src="@drawable/ic_hand"
+                                android:visibility="invisible" />
+
+                            <TextView
+                                android:id="@+id/txt_my_score_5_7"
+                                android:layout_width="35dp"
+                                android:layout_height="35dp"
+                                android:background="@drawable/shape_rect_gray"
+                                android:gravity="center"
+                                android:text="P"
+                                android:textColor="@color/color_graph_gray"
+                                android:textSize="15dp"
+                                android:visibility="visible" />
+                        </RelativeLayout>
+
+                    </LinearLayout>
+                </LinearLayout>-->
+                <!-- 하단부 개발한 공부시스템 내역 START -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginBottom="15dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginTop="15dp"
+                    android:gravity="bottom"
+                    android:orientation="vertical">
+
+                    <RelativeLayout
+                        android:id="@+id/layout_developed_gongc"
+                        android:layout_width="match_parent"
+                        android:layout_height="35dp"
+                        android:background="@drawable/shape_rect_upper_gray"
+                        android:clickable="true">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true"
+                            android:text="@string/developed_gongc"
+                            android:textColor="@color/color_text_medium_gray"
+                            android:textSize="13dp" />
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
+                            android:layout_centerVertical="true"
+                            android:layout_marginRight="15dp"
+                            android:src="@drawable/ic_keyboard_arrow_right_black_24dp" />
+                    </RelativeLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/shape_rect_bottom_gray"
+                        android:orientation="vertical"
+                        android:paddingBottom="8dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            android:orientation="vertical">
+
+                            <RelativeLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="25dp"
+                                android:layout_marginLeft="20dp"
+                                android:gravity="center_vertical">
+
+                                <TextView
+                                    android:id="@+id/txt_history_1"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="2017년 3월"
+                                    android:textColor="@color/color_text_medium_gray"
+                                    android:textSize="12dp" />
+
+                                <TextView
+                                    android:id="@+id/txt_point_1"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_alignParentRight="true"
+                                    android:layout_marginRight="15dp"
+                                    android:text="@string/point"
+                                    android:textColor="@color/color_text_medium_gray"
+                                    android:textSize="12dp" />
+
+                                <TextView
+                                    android:id="@+id/txt_score_1"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_toLeftOf="@id/txt_point_1"
+                                    android:text="70"
+                                    android:textColor="@color/color_text_medium_gray"
+                                    android:textSize="12dp" />
+
+                                <TextView
+                                    android:id="@+id/txt_evaluation_1"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginRight="3dp"
+                                    android:layout_toLeftOf="@id/txt_score_1"
+                                    android:text="@string/evaluation"
+                                    android:textColor="@color/color_text_medium_gray"
+                                    android:textSize="12dp" />
+
+                                <TextView
+                                    android:id="@+id/txt_my_gugongc_1"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginRight="5dp"
+                                    android:layout_toLeftOf="@id/txt_evaluation_1"
+                                    android:text="수업후 복습 10분"
+                                    android:textColor="@color/color_text_medium_gray"
+                                    android:textSize="12dp" />
+
+                            </RelativeLayout>
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+
+                            <RelativeLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="25dp"
+                                android:layout_marginLeft="20dp"
+                                android:gravity="center_vertical">
+
+                                <TextView
+                                    android:id="@+id/txt_history_2"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="2017년 3월"
+                                    android:textColor="@color/color_text_medium_gray"
+                                    android:textSize="12dp" />
+
+                                <TextView
+                                    android:id="@+id/txt_point_2"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_alignParentRight="true"
+                                    android:layout_marginRight="15dp"
+                                    android:text="@string/point"
+                                    android:textColor="@color/color_text_medium_gray"
+                                    android:textSize="12dp" />
+
+                                <TextView
+                                    android:id="@+id/txt_score_2"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_toLeftOf="@id/txt_point_2"
+                                    android:text="70"
+                                    android:textColor="@color/color_text_medium_gray"
+                                    android:textSize="12dp" />
+
+                                <TextView
+                                    android:id="@+id/txt_evaluation_2"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginRight="3dp"
+                                    android:layout_toLeftOf="@id/txt_score_2"
+                                    android:text="@string/evaluation"
+                                    android:textColor="@color/color_text_medium_gray"
+                                    android:textSize="12dp" />
+
+                                <TextView
+                                    android:id="@+id/txt_my_gugongc_2"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginRight="5dp"
+                                    android:layout_toLeftOf="@id/txt_evaluation_2"
+                                    android:text="수업후 복습 10분"
+                                    android:textColor="@color/color_text_medium_gray"
+                                    android:textSize="12dp" />
+
+                            </RelativeLayout>
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+
+                            <RelativeLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="25dp"
+                                android:layout_marginLeft="20dp"
+                                android:gravity="center_vertical">
+
+                                <TextView
+                                    android:id="@+id/txt_history_3"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="2017년 3월"
+                                    android:textColor="@color/color_text_medium_gray"
+                                    android:textSize="12dp" />
+
+                                <TextView
+                                    android:id="@+id/txt_point_3"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_alignParentRight="true"
+                                    android:layout_marginRight="15dp"
+                                    android:text="@string/point"
+                                    android:textColor="@color/color_text_medium_gray"
+                                    android:textSize="12dp" />
+
+                                <TextView
+                                    android:id="@+id/txt_score_3"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_toLeftOf="@id/txt_point_3"
+                                    android:text="70"
+                                    android:textColor="@color/color_text_medium_gray"
+                                    android:textSize="12dp" />
+
+                                <TextView
+                                    android:id="@+id/txt_evaluation_3"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginRight="3dp"
+                                    android:layout_toLeftOf="@id/txt_score_3"
+                                    android:text="@string/evaluation"
+                                    android:textColor="@color/color_text_medium_gray"
+                                    android:textSize="12dp" />
+
+                                <TextView
+                                    android:id="@+id/txt_my_gugongc_"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginRight="5dp"
+                                    android:layout_toLeftOf="@id/txt_evaluation_3"
+                                    android:text="수업후 복습 10분"
+                                    android:textColor="@color/color_text_medium_gray"
+                                    android:textSize="12dp" />
+
+                            </RelativeLayout>
+
+                        </LinearLayout>
+                    </LinearLayout>
+
+                </LinearLayout>
+                <!-- 하단부 개발한 공부시스템 내역 END -->
+            </LinearLayout>
+            <!--주차 별 점수 입력 END -->
+        </LinearLayout>
+    </ScrollView>
+
+    <ImageView
+        android:elevation="2dp"
+        android:id="@+id/img_loading"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_centerInParent="true"
+        android:src="@drawable/loading_anim"
+        android:scaleType="centerInside"
+        android:clickable="true"
+        android:background="@color/color_translate_gray"
+        android:contentDescription="@string/app_name" />
+
+</RelativeLayout>

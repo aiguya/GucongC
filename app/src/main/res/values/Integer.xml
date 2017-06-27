@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>    
+    
+	<!-- loading animation interval -->
+	<integer name="loading_animation_interval">20</integer>
+    
+</resources>

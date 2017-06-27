@@ -1,0 +1,20 @@
+<resources>
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+
+
+    <dimen name="day_text_size_selected">20.0sp</dimen>
+    <dimen name="day_text_size_not_selected">14.0sp</dimen>
+
+    <dimen name="toady_circle_radius">32.0dp</dimen>
+
+    <dimen name="day_circle_radius">38.0dp</dimen>
+
+    <dimen name="workbook_thumb_width">40.0dp</dimen>
+    <dimen name="workbook_thumb_height">50.67dp</dimen>
+
+    <dimen name="bg_rounded_outer_line_thickness">1.0dp</dimen>
+    <dimen name="bg_rounded_corner_radius">4.0dp</dimen>
+
+</resources>
