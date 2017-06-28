@@ -311,8 +311,10 @@ public class ActChapter extends AppCompatActivity {
                 }
             }
             vh.checkBoxDetail.setTag(pos);
+            vh.checkBox.setTag(pos);
             vh.checkBoxDetail.setChecked(mList.get(position).isCheckBoxChecked());
-            mUtil.printLog(DEBUG,TAG, "[ChapterListViewAdapter] [getView] item position = " + pos + ", checked = " + mList.get(position).isCheckBoxChecked());
+            vh.checkBox.setChecked(mList.get(position).isCheckBoxChecked());
+            mUtil.printLog(DEBUG,TAG, "[ChapterListViewAdapter] [getView] id : "+ position + " item mChapterId = " + row.getChapterId());
             /*vh.checkBoxDetail.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
@@ -321,6 +323,18 @@ public class ActChapter extends AppCompatActivity {
                     notifyDataSetChanged();
                 }
             });*/
+            vh.checkBox.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    mList.get((int)view.getTag()).setCheckBoxChecked(!mList.get((int)view.getTag()).isCheckBoxChecked());
+                    for(int i = (int)view.getTag() + 1  ; i < mList.size() ; i ++ ){
+                        if(mList.get(i).getChapterId() == mList.get((int)view.getTag()).getChapterId()){
+                            mList.get(i).setCheckBoxChecked(mList.get((int)view.getTag()).isCheckBoxChecked());
+                        }
+                    }
+                    notifyDataSetChanged();
+                }
+            });
             vh.checkBoxDetail.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -339,7 +353,6 @@ public class ActChapter extends AppCompatActivity {
                     vh.layoutUnit.setVisibility(View.VISIBLE);
 
                     if (row.getCellOpen()) {
-
                         vh.btnOpen.setImageResource(R.drawable.ic_expand_less_black);
                     } else {
 
