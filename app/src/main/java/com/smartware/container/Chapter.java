@@ -35,7 +35,9 @@ public class Chapter implements Parcelable {
 	 * **/
 	public static final Boolean CL_CLOSE = false;
 	public static final Boolean CL_OPEN = true;
-		
+	public static final Boolean CB_CHECKED = true;
+	public static final Boolean CB_UNCHECKED = false;
+
 	private int								mWorkbookId;
 	private int								mChapterId;
 	private int								mFolderId;
@@ -53,7 +55,8 @@ public class Chapter implements Parcelable {
 	private String mResultUrl;
 	private int								mCellType;
 	private boolean						mCellOpen;
-	
+	private boolean						mCheckBoxChecked;
+
 	public Chapter() {
 		mWorkbookId = 0;
 		mChapterId = 0;
@@ -72,11 +75,12 @@ public class Chapter implements Parcelable {
 		mResultUrl = "";
 		mCellType = CT_UNIT_DETAIL;
 		mCellOpen = CL_CLOSE;
+		mCheckBoxChecked = CB_UNCHECKED;
 	}
 	
 	public Chapter(int workbookId, int chapterId, int folderId, int achievement, int chapterStatus,
 				   int myPoint, int avgPoint, int highestPoint, String chapterNumber, String chapterName,
-				   String folderName, String testQuestionUrl, String resultUrl, int cellType, boolean cellOpen) {
+				   String folderName, String testQuestionUrl, String resultUrl, int cellType, boolean cellOpen, boolean cbCheck) {
 		
 		mWorkbookId = workbookId;
 		mChapterId = chapterId;
@@ -95,6 +99,7 @@ public class Chapter implements Parcelable {
 		mResultUrl = resultUrl;
 		mCellType = cellType;
 		mCellOpen = cellOpen;
+		mCheckBoxChecked = cbCheck;
 	}
 	
 	public Chapter(Chapter item) {
@@ -115,6 +120,7 @@ public class Chapter implements Parcelable {
 		mResultUrl = item.getResultUrl();
 		mCellType = item.getCellType();
 		mCellOpen = item.getCellOpen();
+		mCheckBoxChecked = item.isCheckBoxChecked();
 	}
 	
 	public Chapter(Parcel source) {
@@ -135,6 +141,7 @@ public class Chapter implements Parcelable {
 		mResultUrl = source.readString();
 		mCellType = source.readInt();
 		mCellOpen = source.readByte() == 0x01 ? CL_OPEN : CL_CLOSE;
+		mCheckBoxChecked = source.readByte() == 0x01 ? CB_CHECKED : CB_CHECKED;
 	}
 	
 	public static final Parcelable.Creator<Chapter> CREATOR = new Parcelable.Creator<Chapter>() {
@@ -170,6 +177,7 @@ public class Chapter implements Parcelable {
 		dest.writeString(mResultUrl);
 		dest.writeInt(mCellType);
 		dest.writeByte( mCellOpen ? (byte) 0x01 : (byte) 0x00 );
+		dest.writeByte( mCheckBoxChecked ? (byte) 0x01 : (byte) 0x00 );
 	}
 	
 	@Override
@@ -195,11 +203,12 @@ public class Chapter implements Parcelable {
 				+ "mFolderName : %s\n"
 				+ "mTestQuestionUrl : %s\n"
 				+ "mResultUrl : %s\n"
+				+ "mCheckBoxChecked : %d\n"
 				+ "mCellType : %d\n",
 				
 				mWorkbookId, mChapterId, mFolderId, mAchievement , mChapterStatus, 
 				mMyPoint, mAvgPoint, mHighestPoint, mChapterNumber, mChapterName, 
-				mFolderName, mTestQuestionUrl, mResultUrl, mCellType);	
+				mFolderName, mTestQuestionUrl, mResultUrl, mCheckBoxChecked, mCellType);
 	}
 	
 	public void setWorkbookId(int val) {
@@ -321,28 +330,12 @@ public class Chapter implements Parcelable {
 	public boolean getCellOpen() {
 		return mCellOpen;
 	}
+
+	public boolean isCheckBoxChecked() {
+		return mCheckBoxChecked;
+	}
+
+	public void setCheckBoxChecked(boolean checkBoxChecked) {
+		this.mCheckBoxChecked = checkBoxChecked;
+	}
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

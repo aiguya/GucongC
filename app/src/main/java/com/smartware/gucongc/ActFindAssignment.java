@@ -228,6 +228,16 @@ public class ActFindAssignment extends AppCompatActivity {
             }
         };
     }
+/*
+
+    //액션버튼 메뉴 액션바에 집어 넣기
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.schedule_edit_menu, menu);
+        return true;
+    }
+*/
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -235,6 +245,8 @@ public class ActFindAssignment extends AppCompatActivity {
             case android.R.id.home:
                 actFinish(RESULT_CANCELED);
                 Toast.makeText(this, "뒤로 가기", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.action_ok:
                 break;
 
         }

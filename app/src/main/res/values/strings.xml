@@ -125,9 +125,9 @@
     <string name="week_3">3주</string>
     <string name="week_4">4주</string>
     <string name="week_5">5주</string>
-    <string name="my_score_question">나의 구공시 목표에 충실하셨나오?</string>
+    <string name="my_score_question">나의 구공시 목표에 충실하셨나요?</string>
     <string name="set_target">이번달 목표를 입력하세요</string>
-    <string name="set_target_warning">한 달간의 목표를 설정합니다. \n중도 변경시 이번 달의 점수는 \n초기화 되므로 신중하게 설정하세요.</string>
+    <string name="set_target_warning">한 달간의 목표를 설정합니다. \n신중하게 설정하세요.</string>
     <string name="input_target">목표를 입력하세요</string>
     <string name="double_check">중복확인</string>
     <string name="user_name">이름</string>
@@ -173,6 +173,7 @@
     <string name="week_unit">주</string>
     <string name="month_unit">달</string>
     <string name="select_icons">확인 아이콘을 선택하세요.</string>
+    <string name="select_all">전부 선택</string>
 
 
 </resources>

@@ -55,7 +55,7 @@
                     android:layout_height="80dp"
                     android:layout_marginRight="5dp"
                     android:background="@drawable/shape_rect_green"
-                    android:src="@drawable/ic_hand" />
+                    android:src="@drawable/icon01_48dp" />
 
                 <ImageButton
                     android:id="@+id/btn_not_bad"
@@ -63,14 +63,14 @@
                     android:layout_height="80dp"
                     android:layout_marginRight="5dp"
                     android:background="@drawable/shape_rect_green"
-                    android:src="@drawable/img_cb_blue" />
+                    android:src="@drawable/icon02_48dp" />
 
                 <ImageButton
                     android:id="@+id/btn_bad"
                     android:layout_width="80dp"
                     android:layout_height="80dp"
                     android:background="@drawable/shape_rect_green"
-                    android:src="@drawable/img_cb_red" />
+                    android:src="@drawable/icon03_48dp" />
 
             </LinearLayout>
 

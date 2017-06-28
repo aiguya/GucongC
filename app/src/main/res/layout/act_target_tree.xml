@@ -1149,7 +1149,7 @@
                                     android:id="@+id/txt_history_1"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="2017년 3월"
+                                    android:text="0000년 00월"
                                     android:textColor="@color/color_text_medium_gray"
                                     android:textSize="12dp" />
 
@@ -1168,7 +1168,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_toLeftOf="@id/txt_point_1"
-                                    android:text="70"
+                                    android:text="00"
                                     android:textColor="@color/color_text_medium_gray"
                                     android:textSize="12dp" />
 
@@ -1188,7 +1188,7 @@
                                     android:layout_height="wrap_content"
                                     android:layout_marginRight="5dp"
                                     android:layout_toLeftOf="@id/txt_evaluation_1"
-                                    android:text="수업후 복습 10분"
+                                    android:text="구공시 목표"
                                     android:textColor="@color/color_text_medium_gray"
                                     android:textSize="12dp" />
 
@@ -1211,7 +1211,7 @@
                                     android:id="@+id/txt_history_2"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="2017년 3월"
+                                    android:text="0000년 00월"
                                     android:textColor="@color/color_text_medium_gray"
                                     android:textSize="12dp" />
 
@@ -1230,7 +1230,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_toLeftOf="@id/txt_point_2"
-                                    android:text="70"
+                                    android:text="00"
                                     android:textColor="@color/color_text_medium_gray"
                                     android:textSize="12dp" />
 
@@ -1250,7 +1250,7 @@
                                     android:layout_height="wrap_content"
                                     android:layout_marginRight="5dp"
                                     android:layout_toLeftOf="@id/txt_evaluation_2"
-                                    android:text="수업후 복습 10분"
+                                    android:text="구공시 목표"
                                     android:textColor="@color/color_text_medium_gray"
                                     android:textSize="12dp" />
 
@@ -1273,7 +1273,7 @@
                                     android:id="@+id/txt_history_3"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="2017년 3월"
+                                    android:text="0000년 00월"
                                     android:textColor="@color/color_text_medium_gray"
                                     android:textSize="12dp" />
 
@@ -1292,7 +1292,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_toLeftOf="@id/txt_point_3"
-                                    android:text="70"
+                                    android:text="00"
                                     android:textColor="@color/color_text_medium_gray"
                                     android:textSize="12dp" />
 
@@ -1312,7 +1312,7 @@
                                     android:layout_height="wrap_content"
                                     android:layout_marginRight="5dp"
                                     android:layout_toLeftOf="@id/txt_evaluation_3"
-                                    android:text="수업후 복습 10분"
+                                    android:text="구공시 목표"
                                     android:textColor="@color/color_text_medium_gray"
                                     android:textSize="12dp" />
 
@@ -1330,6 +1330,7 @@
 
     <ImageView
         android:elevation="2dp"
+        android:visibility="gone"
         android:id="@+id/img_loading"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

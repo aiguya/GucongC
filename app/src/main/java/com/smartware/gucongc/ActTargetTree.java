@@ -414,13 +414,13 @@ public class ActTargetTree extends AppCompatActivity implements View.OnClickList
                 holder.imgView.setVisibility(View.VISIBLE);
                 switch (list.get(i).getScore()) {
                     case 1:
-                        holder.imgView.setImageResource(R.drawable.ic_hand);
+                        holder.imgView.setImageResource(R.drawable.icon01_24dp);
                         break;
                     case 2:
-                        holder.imgView.setImageResource(R.drawable.img_cb_blue); //임시아이콘
+                        holder.imgView.setImageResource(R.drawable.icon02_24dp); //임시아이콘
                         break;
                     case 3:
-                        holder.imgView.setImageResource(R.drawable.img_cb_red); //아이콘
+                        holder.imgView.setImageResource(R.drawable.icon03_24dp); //아이콘
                         break;
                 }
             } else {

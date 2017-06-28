@@ -25,7 +25,7 @@
                 android:orientation="horizontal">
 
                 <CheckBox
-                    android:id="@+id/cb_chapter"
+                    android:id="@+id/cb_cell_unit_detail"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
 
@@ -59,12 +59,17 @@
             android:gravity="center_vertical"
             android:orientation="horizontal">
 
+            <CheckBox
+                android:id="@+id/cb_cell_unit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
 
             <TextView
                 android:id="@+id/text_chapter_number"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="15dp"
+                android:layout_marginLeft="10dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginBottom="10dp"
                 android:gravity="center"

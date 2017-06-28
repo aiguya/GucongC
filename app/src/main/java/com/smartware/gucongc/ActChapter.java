@@ -4,7 +4,6 @@ package com.smartware.gucongc;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.ActivityInfo;
 import android.graphics.drawable.AnimationDrawable;
 import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
@@ -16,12 +15,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
-import android.view.WindowManager;
-import android.widget.AdapterView;
 import android.widget.BaseAdapter;
-import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -254,6 +250,7 @@ public class ActChapter extends AppCompatActivity {
         public TextView textChapterName;
         public TextView textChapterNameDetail;
         public CheckBox checkBox;
+        public CheckBox checkBoxDetail;
         public ImageButton btnOpen;
     }
 
@@ -298,7 +295,8 @@ public class ActChapter extends AppCompatActivity {
                 vh.layoutUnit = (LinearLayout) convertView.findViewById(R.id.layout_cell_unit);
                 vh.textChapterNumber = (TextView) convertView.findViewById(R.id.text_chapter_number);
                 vh.textChapterName = (TextView) convertView.findViewById(R.id.text_chapter_name);
-                vh.checkBox = (CheckBox) convertView.findViewById(R.id.cb_chapter);
+                vh.checkBoxDetail = (CheckBox) convertView.findViewById(R.id.cb_cell_unit_detail);
+                vh.checkBox = (CheckBox) convertView.findViewById(R.id.cb_cell_unit);
                 vh.layoutUnitDetail = (LinearLayout) convertView.findViewById(R.id.layout_cell_unit_detail);
                 vh.textChapterNameDetail = (TextView) convertView.findViewById(R.id.text_chapter_name_detail);
                 vh.btnOpen = (ImageButton) convertView.findViewById(R.id.btn_tc_opener);
@@ -312,15 +310,27 @@ public class ActChapter extends AppCompatActivity {
                     return convertView;
                 }
             }
-            vh.checkBox.setOnClickListener(new View.OnClickListener() {
+            vh.checkBoxDetail.setTag(pos);
+            vh.checkBoxDetail.setChecked(mList.get(position).isCheckBoxChecked());
+            mUtil.printLog(DEBUG,TAG, "[ChapterListViewAdapter] [getView] item position = " + pos + ", checked = " + mList.get(position).isCheckBoxChecked());
+            /*vh.checkBoxDetail.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                    mUtil.printLog(DEBUG,TAG, "[ChapterListViewAdapter] [onCheckedChanged] item position = " + pos + ", checked = " + b);
+                    mList.get(pos).setCheckBoxChecked(b);
+                    notifyDataSetChanged();
+                }
+            });*/
+            vh.checkBoxDetail.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    mCheckedItemPosition = pos;
+                    //((CheckBox)view).setChecked(!mList.get((int)view.getTag()).isCheckBoxChecked());
+                    mList.get((int)view.getTag()).setCheckBoxChecked(!mList.get((int)view.getTag()).isCheckBoxChecked());
                     notifyDataSetChanged();
                 }
             });
 
-            if( pos != mCheckedItemPosition) vh.checkBox.setChecked(false);
+//            if (pos != mCheckedItemPosition) vh.checkBoxDetail.setChecked(false);
 
             vh.layoutUnitDetail.setVisibility(View.VISIBLE);
             switch (row.getCellType()) {
