@@ -141,7 +141,7 @@ public class Chapter implements Parcelable {
 		mResultUrl = source.readString();
 		mCellType = source.readInt();
 		mCellOpen = source.readByte() == 0x01 ? CL_OPEN : CL_CLOSE;
-		mCheckBoxChecked = source.readByte() == 0x01 ? CB_CHECKED : CB_CHECKED;
+		mCheckBoxChecked = source.readByte() == 0x01 ? CB_CHECKED : CB_UNCHECKED;
 	}
 	
 	public static final Parcelable.Creator<Chapter> CREATOR = new Parcelable.Creator<Chapter>() {

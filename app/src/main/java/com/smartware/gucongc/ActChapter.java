@@ -47,6 +47,7 @@ public class ActChapter extends AppCompatActivity {
 
     private ListView mListViewChapter;
     private ImageView mImgLoadingAnim;
+    private CheckBox mCbSelectAll;
 
     private AnimationDrawable mAnimLoading;
 
@@ -133,10 +134,20 @@ public class ActChapter extends AppCompatActivity {
         setContentView(R.layout.act_chapter);
         mListViewChapter = (ListView) findViewById(R.id.list_chapter);
         mImgLoadingAnim = (ImageView) findViewById(R.id.img_loading);
+        mCbSelectAll = (CheckBox) findViewById(R.id.cb_select_all);
         mChapterListViewAdapter = new ChapterListViewAdapter(ActChapter.this, R.layout.tc_chapter, mListChapter);
         mListViewChapter.setAdapter(mChapterListViewAdapter);
         mAnimLoading = (AnimationDrawable) mImgLoadingAnim.getBackground();
         stopLoadingAnimation();
+        mCbSelectAll.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                for(int i = 0 ; i < mWorkbook.getListChapter().size() ; i ++ ){
+                    mWorkbook.getListChapter().get(i).setCheckBoxChecked(b);
+                    mChapterListViewAdapter.notifyDataSetChanged();
+                }
+            }
+        });
     }
 
 
@@ -155,12 +166,21 @@ public class ActChapter extends AppCompatActivity {
                 Toast.makeText(this, "뒤로 가기", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.action_ok:
-                if (mCheckedItemPosition < 0) {
+                boolean isChecked = false;
+                for(int i = 0 ; i < mWorkbook.getListChapter().size() ; i ++ ){
+                    if (mWorkbook.getListChapter().get(i).isCheckBoxChecked()){
+                        isChecked = true;
+                        break;
+                    }
+                }
+
+                if(!isChecked){
                     Toast.makeText(this, "단원을 선택하세요", Toast.LENGTH_SHORT).show();
                     break;
                 }
+
                 Intent intent = new Intent();
-                intent.putExtra(EXTRA_WORKBOOK_DETAILS, mListChapter.get(mCheckedItemPosition));
+                intent.putExtra(EXTRA_WORKBOOK_DETAILS, mWorkbook.getListChapter());
                 setResult(RESULT_OK, intent);
                 finish();
                 Toast.makeText(this, "확인", Toast.LENGTH_SHORT).show();
@@ -327,9 +347,9 @@ public class ActChapter extends AppCompatActivity {
                 @Override
                 public void onClick(View view) {
                     mList.get((int)view.getTag()).setCheckBoxChecked(!mList.get((int)view.getTag()).isCheckBoxChecked());
-                    for(int i = (int)view.getTag() + 1  ; i < mList.size() ; i ++ ){
-                        if(mList.get(i).getChapterId() == mList.get((int)view.getTag()).getChapterId()){
-                            mList.get(i).setCheckBoxChecked(mList.get((int)view.getTag()).isCheckBoxChecked());
+                    for(int i = 0  ; i < mWorkbook.getListChapter().size() ; i ++ ){
+                        if(mWorkbook.getListChapter().get(i).getChapterId() == mList.get((int)view.getTag()).getChapterId()){
+                            mWorkbook.getListChapter().get(i).setCheckBoxChecked(mList.get((int)view.getTag()).isCheckBoxChecked());
                         }
                     }
                     notifyDataSetChanged();
@@ -338,13 +358,20 @@ public class ActChapter extends AppCompatActivity {
             vh.checkBoxDetail.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    //((CheckBox)view).setChecked(!mList.get((int)view.getTag()).isCheckBoxChecked());
                     mList.get((int)view.getTag()).setCheckBoxChecked(!mList.get((int)view.getTag()).isCheckBoxChecked());
+                    int unitID = mList.get((int)view.getTag()).getChapterId();
+                    for(int i = 0; i < mWorkbook.getListChapter().size() ; i ++ ){
+                        if(mWorkbook.getListChapter().get(i).getCellType() == Chapter.CT_UNIT
+                                && mWorkbook.getListChapter().get(i).getChapterId() == unitID
+                                && mWorkbook.getListChapter().get(i).isCheckBoxChecked()) {
+                            mWorkbook.getListChapter().get(i).setCheckBoxChecked(false);
+                            break;
+                        }
+                    }
                     notifyDataSetChanged();
                 }
             });
 
-//            if (pos != mCheckedItemPosition) vh.checkBoxDetail.setChecked(false);
 
             vh.layoutUnitDetail.setVisibility(View.VISIBLE);
             switch (row.getCellType()) {

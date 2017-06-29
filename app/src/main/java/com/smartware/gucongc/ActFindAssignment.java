@@ -161,7 +161,7 @@ public class ActFindAssignment extends AppCompatActivity {
         mUtil.printLog(DEBUG, TAG, "[onActivityResult] requestCode : " + requestCode + ", resultCode : " + resultCode);
         switch (resultCode) {
             case RESULT_OK:
-                mWorkbookDetails = data.getParcelableExtra(ActChapter.EXTRA_WORKBOOK_DETAILS);
+                /*mWorkbookDetails = data.getParcelableExtra(ActChapter.EXTRA_WORKBOOK_DETAILS);
                 if (mCheckedItemPosition < 0) {
                     Toast.makeText(this, "교재를 선택하세요", Toast.LENGTH_SHORT).show();
                     break;
@@ -172,7 +172,11 @@ public class ActFindAssignment extends AppCompatActivity {
                 Intent intent = new Intent();
                 intent.putExtra(EXTRA_WORKBOOK, mListWorkbookSearch.get(mCheckedItemPosition));
                 intent.putExtra(ActChapter.EXTRA_WORKBOOK_DETAILS, mWorkbookDetails);
-                setResult(RESULT_OK, intent);
+                setResult(RESULT_OK, intent);*/
+                Workbook workbook = mListWorkbookSearch.get(mCheckedItemPosition);
+                workbook.setListChapter(data.<Chapter>getParcelableArrayListExtra(ActChapter.EXTRA_WORKBOOK_DETAILS));
+                data.putExtra(EXTRA_WORKBOOK, workbook);
+                setResult(RESULT_OK, data);
                 finish();
                 Toast.makeText(this, "확인", Toast.LENGTH_SHORT).show();
                 break;

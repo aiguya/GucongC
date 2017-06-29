@@ -64,6 +64,7 @@ public class ScheduleItem implements Parcelable {
 	private String                  mFolderID;
 	private String                  mFrom;
 	private String                  mWorkbookName;
+	private String                  mRepeat;
 
 	public ScheduleItem() {
 		mIdx = 0;
@@ -77,10 +78,11 @@ public class ScheduleItem implements Parcelable {
 		mFolderID = "";
 		mFrom = "";
 		mWorkbookName= "";
+		mRepeat = "";
 	}
 
 	public ScheduleItem(int idx, int type, int category, long date, int dayOdWeek, String title,
-						int wrongAnswerNoteType, int cellType, String folderID, String from, String workbookName) {
+						int wrongAnswerNoteType, int cellType, String folderID, String from, String workbookName, String repeat) {
 		mIdx = idx;
 		mType = type;
 		mCategory = category;
@@ -92,6 +94,7 @@ public class ScheduleItem implements Parcelable {
 		mFolderID = folderID;
 		mFrom = from;
 		mWorkbookName = workbookName;
+		mRepeat = repeat;
 	}
 
 	public ScheduleItem(ScheduleItem item) {
@@ -106,6 +109,7 @@ public class ScheduleItem implements Parcelable {
 		mFolderID = item.getFolderID();
 		mFrom = item.getFrom();
 		mWorkbookName = item.getWorkbookName();
+		mRepeat = item.getRepeat();
 	}
 
 	public ScheduleItem(Parcel source) {
@@ -120,6 +124,7 @@ public class ScheduleItem implements Parcelable {
 		mFolderID = source.readString();
 		mFrom = source.readString();
 		mWorkbookName = source.readString();
+		mRepeat = source.readString();
 	}
 
 	public static final Parcelable.Creator<ScheduleItem> CREATOR = new Parcelable.Creator<ScheduleItem>() {
@@ -149,6 +154,7 @@ public class ScheduleItem implements Parcelable {
 		dest.writeString(mFolderID);
 		dest.writeString(mFrom);
 		dest.writeString(mWorkbookName);
+		dest.writeString(mRepeat);
 	}
 
 	@Override
@@ -169,8 +175,9 @@ public class ScheduleItem implements Parcelable {
 						+ "mCellType : %d\n"
 						+ "mFolderID : %s\n"
 						+ "mFrom : %s\n"
-						+ "mWorkbookName : %s\n",
-				mIdx, mType, mCategory, getDateString(), mDayOfWeek, mTitle, mWrongAnswerNoteType, mCellType, mFolderID, mFrom, mWorkbookName ) ;
+						+ "mWorkbookName : %s\n"
+						+ "mRepeat : %s\n",
+				mIdx, mType, mCategory, getDateString(), mDayOfWeek, mTitle, mWrongAnswerNoteType, mCellType, mFolderID, mFrom, mWorkbookName, mRepeat ) ;
 	}
 
 	public void setIdx(int idx) {
@@ -269,6 +276,14 @@ public class ScheduleItem implements Parcelable {
 
 	public int getCellType() {
 		return mCellType;
+	}
+
+	public String getRepeat() {
+		return mRepeat;
+	}
+
+	public void setRepeat(String repeat) {
+		this.mRepeat = repeat;
 	}
 }
 

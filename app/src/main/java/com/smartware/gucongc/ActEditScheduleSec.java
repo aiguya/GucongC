@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.AnimationDrawable;
 import android.graphics.drawable.ColorDrawable;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -19,12 +20,15 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RadioGroup;
 import android.widget.TextView;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.smartware.common.Utils;
 import com.smartware.container.Chapter;
+import com.smartware.container.ScheduleItem;
 import com.smartware.container.Workbook;
 import com.smartware.manager.CM;
+import com.smartware.manager.DM;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -62,6 +66,15 @@ public class ActEditScheduleSec extends AppCompatActivity {
     private ImageView mImgLoadingAnim;
     private AnimationDrawable mAnimLoading;
     private InputMethodManager mInputMethodManager;
+    private TimePicker mTimePicker;
+
+    private String mSortedFolderID;
+    private String mStartDate;
+    private String mStartTime;
+    private int mSortdFolderIDSum;
+    private int mType;
+    private Workbook mWorkbook;
+    private ScheduleItem mScheduleItem;
 
     private Utils mUtil = Utils.getInstance();
 
@@ -83,6 +96,8 @@ public class ActEditScheduleSec extends AppCompatActivity {
         getSupportActionBar().setBackgroundDrawable(new ColorDrawable(0xFF56aed2));
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_navigate_before_white_36dp);
+        mStartDate = new SimpleDateFormat("YYYY-MM-dd").format(new Date(mTodayDate));
+        mUtil.printLog(DEBUG, TAG, "[initView] mStartDate : " + mStartDate);
         mArrayWeeksTxt = new ArrayList<>();
         for (int id : mArrayWeeksID) {
             mArrayWeeksTxt.add((TextView) findViewById(id));
@@ -92,6 +107,7 @@ public class ActEditScheduleSec extends AppCompatActivity {
         stopLoadingAnimation();
 
         mPlatPanel = findViewById(R.id.view_repeat_setting);
+        mTimePicker = (TimePicker)findViewById(R.id.time_picker);
         mEditTitle = (EditText) findViewById(R.id.edit_schedule_title);
         mEditTitle.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
@@ -112,7 +128,7 @@ public class ActEditScheduleSec extends AppCompatActivity {
                         mBtnSelectSchedule.setClickable(true);
                         mBtnSelectSchedule.setText(R.string.edit_workbook);
                         mBtnSelectSchedule.setBackgroundResource(R.drawable.btn_blue_plat);
-                        mPlatPanel.setVisibility(View.VISIBLE);
+                        mPlatPanel.setVisibility(View.GONE);
                         break;
                     case R.id.rb_todo:
                         mEditTitle.setEnabled(true);
@@ -149,6 +165,7 @@ public class ActEditScheduleSec extends AppCompatActivity {
         startActivityForResult(intent, 0);
 
     }
+
     private void setEditTextEnterKeyListener() {
         mUtil.printLog(DEBUG, TAG, "[setListViewWorkbookItemClickListener]");
         mEditTitle.setOnEditorActionListener(new TextView.OnEditorActionListener() {
@@ -181,7 +198,9 @@ public class ActEditScheduleSec extends AppCompatActivity {
             //저장
             case R.id.action_save:
                 Toast.makeText(this, "저장", Toast.LENGTH_SHORT).show();
-                actFinish(RESULT_OK);
+                mScheduleItem = new ScheduleItem();
+                mScheduleItem.setType(mType);
+                new DoMakeSchedule().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                 break;
         }
         return super.onOptionsItemSelected(item);
@@ -193,14 +212,37 @@ public class ActEditScheduleSec extends AppCompatActivity {
         finish();
     }
 
+    private void sortFolderID(ArrayList<Chapter> list) {
+        mSortedFolderID = "";
+        mSortdFolderIDSum = 0;
+        for (int i = 0; i < list.size(); i++) {
+            if (list.get(i).isCheckBoxChecked() && list.get(i).getCellType() == Chapter.CT_UNIT_DETAIL) {
+                mSortdFolderIDSum++;
+                if (mSortdFolderIDSum < list.size() && mSortdFolderIDSum > 1) {
+                    mSortedFolderID = mSortedFolderID + "|";
+                }
+                mSortedFolderID = mSortedFolderID + list.get(i).getFolderId();
+            }
+        }
+        mUtil.printLog(DEBUG, TAG, "[sortFolderID] mSortdFolderIDSum = " + mSortdFolderIDSum);
+        mUtil.printLog(DEBUG, TAG, "[sortFolderID] mSortedFolderID : " + mSortedFolderID);
+    }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         mUtil.printLog(DEBUG, TAG, "[onActivityResult] requestCode : " + requestCode + ", resultCode : " + resultCode);
         switch (resultCode) {
             case RESULT_OK:
-                Workbook item =  data.getParcelableExtra(ActFindAssignment.EXTRA_WORKBOOK);
-                Chapter itemDetails =  data.getParcelableExtra(ActChapter.EXTRA_WORKBOOK_DETAILS);
-                mEditTitle.setText("[" + item.getTitle() + "] "+ itemDetails.getChapterName());
+                mWorkbook = data.getParcelableExtra(ActFindAssignment.EXTRA_WORKBOOK);
+                String str_content = "";
+                for (int i = 0; i < mWorkbook.getListChapter().size(); i++) {
+                    if (mWorkbook.getListChapter().get(i).isCheckBoxChecked() == true) {
+                        str_content = mWorkbook.getListChapter().get(i).getChapterName();
+                        break;
+                    }
+                }
+                mEditTitle.setText("[" + mWorkbook.getTitle() + "] " + str_content);
+                sortFolderID(mWorkbook.getListChapter());
                 break;
             default:
                 break;
@@ -219,7 +261,6 @@ public class ActEditScheduleSec extends AppCompatActivity {
         mImgLoadingAnim.setVisibility(View.GONE);
         mAnimLoading.stop();
     }
-
 
 
     public void onClick(View v) {
@@ -291,6 +332,48 @@ public class ActEditScheduleSec extends AppCompatActivity {
         }
         if (mArrayWeeksTxt.contains(v)) {
             mUtil.printLog(DEBUG, TAG, "[onClick] " + ((TextView) v).getText().toString());
+        }
+    }
+
+    private class DoMakeSchedule extends AsyncTask<String, Void, Integer>{
+
+        @Override
+        protected void onPreExecute() {
+            startLoadingAnimation();
+            super.onPreExecute();
+        }
+
+        @Override
+        protected Integer doInBackground(String... strings) {
+            mUtil.printLog(DEBUG,TAG, "[DoMakeSchedule] [doInBackground]");
+            String repeat = "";
+            for(int i = 0; i < mRepeaArray.length ; i ++ ){
+                if(mRepeaArray[i]){
+                    if(i > 0){
+                        repeat = repeat + "|";
+                    }
+                    repeat = repeat + i;
+                }
+            }
+            mScheduleItem.setRepeat(repeat);
+            int res = DM.getInstance().makeSchedule(mScheduleItem, mStartDate, mStartTime, mSortdFolderIDSum);
+            mUtil.printLog(DEBUG,TAG, "[DoMakeSchedule] [doInBackground] repeat = " + repeat);
+            return res;
+        }
+
+        @Override
+        protected void onPostExecute(Integer integer) {
+            stopLoadingAnimation();
+            switch (integer){
+                case DM.RES_SUCCESS:
+                    actFinish(RESULT_OK);
+                    break;
+                case DM.RES_FAIL:
+                    break;
+                default:
+                    break;
+            }
+            super.onPostExecute(integer);
         }
     }
 

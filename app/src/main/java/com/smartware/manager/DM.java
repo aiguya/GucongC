@@ -237,6 +237,92 @@ public class DM {
         return res;
     }
 
+    public int makeSchedule(ScheduleItem item, String startDate, String startTime, int dayCount){
+        int res = RES_SUCCESS;
+        String rawResult = "";
+
+        List<NameValuePair> params = new ArrayList<NameValuePair>();
+        params.add(new BasicNameValuePair("reqcmd", "set_plan"));
+        params.add(new BasicNameValuePair("title",item.getTitle()));
+        params.add(new BasicNameValuePair("id", CM.getInstance().getUserId()));
+        params.add(new BasicNameValuePair("type", ""+item.getType()));
+        params.add(new BasicNameValuePair("plan_start_date", "" + startDate));
+        params.add(new BasicNameValuePair("plan_start_time", "" + startTime));
+        params.add(new BasicNameValuePair("day_of_week", "" + item.getRepeat()));
+        params.add(new BasicNameValuePair("plan_total_day_cnt", "" + dayCount));
+        params.add(new BasicNameValuePair("folder_ids", "" + item.getFolderID()));
+
+        rawResult = sendHttpPostMsg(BASE_URL_GGC, params);
+        mUtil.printLog(DEBUG, TAG, "[makeSchedule] rawResult : " + rawResult);
+        try {
+            JSONObject response = new JSONObject(rawResult);
+            res = response.getInt("resultcode");
+        } catch (JSONException e) {
+            mUtil.printLog(DEBUG, TAG, "[makeSchedule] JSONException : " + e.getLocalizedMessage());
+            res = RES_FAIL;
+            e.printStackTrace();
+        }
+        return res;
+    }
+
+    /**
+     * workbook data 불러오기
+     * @param item
+     * @param workbookId
+     * @return
+     */
+    public int getWorkbook(Workbook item, String workbookId) {
+        mUtil.printLog(DEBUG, TAG, "[getWorkbook] workbookId : " + workbookId);
+
+        int res = RES_SUCCESS;
+        String rawResult = "";
+        String userId = CM.getInstance().getUserId();
+        List<NameValuePair> params = new ArrayList<NameValuePair>();
+
+        params.add(new BasicNameValuePair("reqcmd", "mytextbook"));
+        params.add(new BasicNameValuePair("memberid", userId));
+        params.add(new BasicNameValuePair("folderid", ""+workbookId));
+
+        rawResult = sendHttpPostMsg(BASE_URL, params);
+        mUtil.printLog(DEBUG, TAG, "[getWorkbook] rawResult : " + rawResult);
+
+
+        try {
+            JSONObject obj = new JSONObject(rawResult);
+            res = obj.getInt("resultcode");
+            Locale locale = Locale.getDefault();
+
+            item.setStatus( Workbook.WS_AVAILABLE );
+            item.setIdx( obj.getInt("FOLDER_ID") );
+            item.setTitle( obj.getString("FOLDER") );
+            item.setMyPoint( Integer.parseInt( nullCheck( obj.getString("PAVG"), "-1" ) ) );
+            try {
+                item.setAchievement( obj.getInt("ACHIEVE") );
+            } catch (JSONException e) {
+                mUtil.printLog(DEBUG, TAG, "[getMyWorkbookList] JSONException @ ACHIEVE: " + e.getLocalizedMessage());
+                item.setAchievement( Workbook.WA_NO_DATA );
+                e.printStackTrace();
+            }
+            item.setSerieseName( nullCheck( obj.getString("META2") ) );
+            item.setTarget( nullCheck( obj.getString("META3") ) );
+            item.setSubject( nullCheck( obj.getString("META4") ) );
+            item.setTargetType( Integer.parseInt( nullCheck( obj.getString("META5"), "1" ) ) );
+            item.setYear( nullCheck( obj.getString("META6") ) );
+            item.setThumbUrl( String.format( locale, "%s/%s.jpg", FOLDER_STYLE_BASE_URL, obj.getString("FOLDER_ID") ) );
+            item.setInfoUrl( String.format( locale, "%s?folder_id=%s&member_id=%s", WORKBOOK_INFO_BASE_URL, obj.getString("FOLDER_ID"), userId ) );
+            item.setWrongAnswerNoteUrl( String.format( locale, "%s?folder_id=%s&member_id=%s", WRONG_ANSWER_NOTE_BASE_URL, obj.getString("FOLDER_ID"), userId) );
+            item.setTenPointRaiseUrl( String.format( locale, "%s?folder_id=%s&member_id=%s", TEN_POINT_RAISE_BASE_URL, obj.getString("FOLDER_ID"), userId) );
+            item.setRelease( "" );
+            item.setEvalustion( "" );
+        } catch (JSONException e) {
+            mUtil.printLog(DEBUG, TAG, "[getWorkbook] JSONException : " + e.getLocalizedMessage());
+            e.printStackTrace();
+        }
+
+        return res;
+    }
+
+
     /**
      * getWorkbookList() :
      *
