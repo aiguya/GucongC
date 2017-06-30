@@ -1,5 +1,7 @@
 package com.smartware.manager;
 
+import android.os.Parcelable;
+
 import com.smartware.common.Utils;
 import com.smartware.container.Chapter;
 import com.smartware.container.GraphCache;
@@ -179,7 +181,7 @@ public class DM {
      * @startDate : 시작일
      * @endDate : 종료일
      */
-    public int getScheduleList(ArrayList<ScheduleItem> list, long startDate, long endDate) {
+    public int getScheduleList_(ArrayList<ScheduleItem> list, long startDate, long endDate) {
         mUtil.printLog(DEBUG, TAG, "[getWorkbookList] startDate : " + Utils.getInstance().getDateStringFromMillis(startDate, "yyyy-MM-dd hh:mm:ss") +
                 ", endDate : " + Utils.getInstance().getDateStringFromMillis(endDate, "yyyy-MM-dd hh:mm:ss"));
 
@@ -229,28 +231,81 @@ public class DM {
      * @startDate : 시작일
      * @endDate : 종료일
      */
-    public int getScheduleList_(ArrayList<ScheduleItem> list, long startDate, long endDate) {
-        mUtil.printLog(DEBUG, TAG, "[getWorkbookList] startDate : " + Utils.getInstance().getDateStringFromMillis(startDate, "yyyy-MM-dd hh:mm:ss") +
-                ", endDate : " + Utils.getInstance().getDateStringFromMillis(endDate, "yyyy-MM-dd hh:mm:ss"));
+    public int getScheduleList(ArrayList<ScheduleItem> list, long startDate, long endDate) {
+        mUtil.printLog(DEBUG, TAG, "[getScheduleList] startDate : " + Utils.getInstance().getDateStringFromMillis(startDate, "yyyy-MM-dd") +
+                ", endDate : " + Utils.getInstance().getDateStringFromMillis(endDate, "yyyy-MM-dd"));
 
         int res = RES_SUCCESS;
+        String rawResult = "";
+        String userId = CM.getInstance().getUserId();
+
+        List<NameValuePair> params = new ArrayList<NameValuePair>();
+
+        params.add(new BasicNameValuePair("reqcmd", "get_plan"));
+        params.add(new BasicNameValuePair("memberid", userId));
+        params.add(new BasicNameValuePair("start_day", Utils.getInstance().getDateStringFromMillis(startDate, "yyyy-MM-dd")));
+        params.add(new BasicNameValuePair("end_day", Utils.getInstance().getDateStringFromMillis(endDate, "yyyy-MM-dd")));
+
+        rawResult = sendHttpPostMsg(BASE_URL_GGC, params);
+        mUtil.printLog(DEBUG, TAG, "[getScheduleList] rawResult : " + rawResult);
+
+        list.clear();
+
+        try {
+            JSONObject response = new JSONObject(rawResult);
+            res = response.getInt("resultcode");
+
+            JSONArray jsonArray = new JSONArray(response.getString("list"));
+            for (int i = 0; i < jsonArray.length(); i++) {
+                JSONObject obj = (JSONObject) jsonArray.get(i);
+                ScheduleItem item = new ScheduleItem();
+                String start_date = nullCheck(obj.getString("PLAN_DAY")) + nullCheck(obj.getString("PLAN_START_TIME"));
+                String end_date = nullCheck(obj.getString("PLAN_END_DAY")) + nullCheck(obj.getString("PLAN_END_TIME"));
+                item.setDate(mUtil.getMillisFromDateString(start_date, "yyyy-MM-ddhh:mm"));
+                mUtil.printLog(DEBUG, TAG, "[getScheduleList] setDate : " + mUtil.getDateStringFromMillis(item.getDate(), "yyyy-MM-dd hh:mm"));
+                item.setEndDate(mUtil.getMillisFromDateString(end_date, "yyyy-MM-ddhh:mm"));
+                mUtil.printLog(DEBUG, TAG, "[getScheduleList] setEndDate : " + mUtil.getDateStringFromMillis(item.getEndDate(), "yyyy-MM-dd hh:mm"));
+                item.setTitle(nullCheck(obj.getString("PLAN_TITLE")));
+                item.setIdx(Integer.parseInt(nullCheck(obj.getString("PLAN_ID"))));
+                item.setDayOfWeek(Integer.parseInt(nullCheck(obj.getString("PLAN_DAY_WEEK"))));
+                item.setCategory(Integer.parseInt(nullCheck(obj.getString("PLAN_STATE"))));
+                item.setType(Integer.parseInt(nullCheck(obj.getString("PLAN_TYPE"))));
+                item.setWrongAnswerNoteType(Integer.parseInt(nullCheck(obj.getString("OX_NOTE"))));
+                item.setGroupID(Integer.parseInt(nullCheck(obj.getString("PLAN_GID"))));
+                item.setFolderID(nullCheck(obj.getString("FOLDER_ID")));
+                item.setCellType(ScheduleItem.CT_ITEM);
+                list.add(item);
+            }
+        } catch (JSONException e) {
+            mUtil.printLog(DEBUG, TAG, "[getScheduleList] JSONException : " + e.getLocalizedMessage());
+            e.printStackTrace();
+        }
+
+
         return res;
     }
 
-    public int makeSchedule(ScheduleItem item, String startDate, String startTime, int dayCount){
+    public int makeSchedule(ScheduleItem item, String startDate, String startTime, int dayCount) {
+        mUtil.printLog(DEBUG, TAG, "[makeSchedule] item : : " + item.getTitle() + ", time : " + startDate + " " + startTime);
         int res = RES_SUCCESS;
         String rawResult = "";
+        String countNum = "";
 
         List<NameValuePair> params = new ArrayList<NameValuePair>();
         params.add(new BasicNameValuePair("reqcmd", "set_plan"));
-        params.add(new BasicNameValuePair("title",item.getTitle()));
+        params.add(new BasicNameValuePair("mTitle", item.getTitle()));
         params.add(new BasicNameValuePair("id", CM.getInstance().getUserId()));
-        params.add(new BasicNameValuePair("type", ""+item.getType()));
+        params.add(new BasicNameValuePair("mType", "" + item.getType()));
         params.add(new BasicNameValuePair("plan_start_date", "" + startDate));
         params.add(new BasicNameValuePair("plan_start_time", "" + startTime));
-        params.add(new BasicNameValuePair("day_of_week", "" + item.getRepeat()));
-        params.add(new BasicNameValuePair("plan_total_day_cnt", "" + dayCount));
+        params.add(new BasicNameValuePair("mDayOfWeek", "" + item.getRepeat()));
+        if (dayCount > 0) {
+            countNum = "" + dayCount;
+        }
+        params.add(new BasicNameValuePair("plan_total_day_cnt", countNum));
         params.add(new BasicNameValuePair("folder_ids", "" + item.getFolderID()));
+        mUtil.printLog(DEBUG, TAG, "[makeSchedule] mType : : " + item.getType() + ", mDayOfWeek : " + item.getRepeat() + ", plan_total_day_cnt : " + countNum);
+        mUtil.printLog(DEBUG, TAG, "[makeSchedule] getFolderID : : " + item.getFolderID());
 
         rawResult = sendHttpPostMsg(BASE_URL_GGC, params);
         mUtil.printLog(DEBUG, TAG, "[makeSchedule] rawResult : " + rawResult);
@@ -267,6 +322,7 @@ public class DM {
 
     /**
      * workbook data 불러오기
+     *
      * @param item
      * @param workbookId
      * @return
@@ -281,7 +337,7 @@ public class DM {
 
         params.add(new BasicNameValuePair("reqcmd", "mytextbook"));
         params.add(new BasicNameValuePair("memberid", userId));
-        params.add(new BasicNameValuePair("folderid", ""+workbookId));
+        params.add(new BasicNameValuePair("folderid", "" + workbookId));
 
         rawResult = sendHttpPostMsg(BASE_URL, params);
         mUtil.printLog(DEBUG, TAG, "[getWorkbook] rawResult : " + rawResult);
@@ -292,28 +348,28 @@ public class DM {
             res = obj.getInt("resultcode");
             Locale locale = Locale.getDefault();
 
-            item.setStatus( Workbook.WS_AVAILABLE );
-            item.setIdx( obj.getInt("FOLDER_ID") );
-            item.setTitle( obj.getString("FOLDER") );
-            item.setMyPoint( Integer.parseInt( nullCheck( obj.getString("PAVG"), "-1" ) ) );
+            item.setStatus(Workbook.WS_AVAILABLE);
+            item.setIdx(obj.getInt("FOLDER_ID"));
+            item.setTitle(obj.getString("FOLDER"));
+            item.setMyPoint(Integer.parseInt(nullCheck(obj.getString("PAVG"), "-1")));
             try {
-                item.setAchievement( obj.getInt("ACHIEVE") );
+                item.setAchievement(obj.getInt("ACHIEVE"));
             } catch (JSONException e) {
                 mUtil.printLog(DEBUG, TAG, "[getMyWorkbookList] JSONException @ ACHIEVE: " + e.getLocalizedMessage());
-                item.setAchievement( Workbook.WA_NO_DATA );
+                item.setAchievement(Workbook.WA_NO_DATA);
                 e.printStackTrace();
             }
-            item.setSerieseName( nullCheck( obj.getString("META2") ) );
-            item.setTarget( nullCheck( obj.getString("META3") ) );
-            item.setSubject( nullCheck( obj.getString("META4") ) );
-            item.setTargetType( Integer.parseInt( nullCheck( obj.getString("META5"), "1" ) ) );
-            item.setYear( nullCheck( obj.getString("META6") ) );
-            item.setThumbUrl( String.format( locale, "%s/%s.jpg", FOLDER_STYLE_BASE_URL, obj.getString("FOLDER_ID") ) );
-            item.setInfoUrl( String.format( locale, "%s?folder_id=%s&member_id=%s", WORKBOOK_INFO_BASE_URL, obj.getString("FOLDER_ID"), userId ) );
-            item.setWrongAnswerNoteUrl( String.format( locale, "%s?folder_id=%s&member_id=%s", WRONG_ANSWER_NOTE_BASE_URL, obj.getString("FOLDER_ID"), userId) );
-            item.setTenPointRaiseUrl( String.format( locale, "%s?folder_id=%s&member_id=%s", TEN_POINT_RAISE_BASE_URL, obj.getString("FOLDER_ID"), userId) );
-            item.setRelease( "" );
-            item.setEvalustion( "" );
+            item.setSerieseName(nullCheck(obj.getString("META2")));
+            item.setTarget(nullCheck(obj.getString("META3")));
+            item.setSubject(nullCheck(obj.getString("META4")));
+            item.setTargetType(Integer.parseInt(nullCheck(obj.getString("META5"), "1")));
+            item.setYear(nullCheck(obj.getString("META6")));
+            item.setThumbUrl(String.format(locale, "%s/%s.jpg", FOLDER_STYLE_BASE_URL, obj.getString("FOLDER_ID")));
+            item.setInfoUrl(String.format(locale, "%s?folder_id=%s&member_id=%s", WORKBOOK_INFO_BASE_URL, obj.getString("FOLDER_ID"), userId));
+            item.setWrongAnswerNoteUrl(String.format(locale, "%s?folder_id=%s&member_id=%s", WRONG_ANSWER_NOTE_BASE_URL, obj.getString("FOLDER_ID"), userId));
+            item.setTenPointRaiseUrl(String.format(locale, "%s?folder_id=%s&member_id=%s", TEN_POINT_RAISE_BASE_URL, obj.getString("FOLDER_ID"), userId));
+            item.setRelease("");
+            item.setEvalustion("");
         } catch (JSONException e) {
             mUtil.printLog(DEBUG, TAG, "[getWorkbook] JSONException : " + e.getLocalizedMessage());
             e.printStackTrace();
@@ -343,7 +399,7 @@ public class DM {
         params.add(new BasicNameValuePair("schooltype", studentGrade));
         params.add(new BasicNameValuePair("listall", "T"));
 
-        rawResult = sendHttpPostMsg(BASE_URL, params);
+        rawResult = sendHttpPostMsg(BASE_URL_GGC, params);
         mUtil.printLog(DEBUG, TAG, "[getWorkbookList] rawResult : " + rawResult);
 
         list.clear();
@@ -712,6 +768,9 @@ public class DM {
             data.setAvMyMonthScore(sum / (maxDate == 0 ? 1 : maxDate));
             data.setStartedDate(nullCheck(obj.getString("START_DATE")));
             String point = nullCheck(obj.getString("POINT" + day));
+            if (point == null || point == "") {
+                point = "0";
+            }
             data.setAvMyMonthScore(Integer.parseInt(point));
 
         } catch (JSONException e) {
@@ -738,7 +797,7 @@ public class DM {
 
         List<NameValuePair> params = new ArrayList<NameValuePair>();
         params.add(new BasicNameValuePair("reqcmd", "upd_goal"));
-        params.add(new BasicNameValuePair("goal_seq",goal_seq));
+        params.add(new BasicNameValuePair("goal_seq", goal_seq));
         params.add(new BasicNameValuePair("id", CM.getInstance().getUserId()));
         params.add(new BasicNameValuePair("point_num", "" + day));
         params.add(new BasicNameValuePair("point", "" + score));
@@ -771,10 +830,10 @@ public class DM {
 
         List<NameValuePair> params = new ArrayList<NameValuePair>();
         params.add(new BasicNameValuePair("reqcmd", "upd_goal"));
-        params.add(new BasicNameValuePair("goal_seq",goal_seq));
+        params.add(new BasicNameValuePair("goal_seq", goal_seq));
         params.add(new BasicNameValuePair("id", CM.getInstance().getUserId()));
         params.add(new BasicNameValuePair("week_num", "" + week_num));
-        switch (type[0]){
+        switch (type[0]) {
             case TargetTreeDate.TEACHER_CHECK:
                 params.add(new BasicNameValuePair("coach_check", "" + type[1]));
                 break;
@@ -1178,6 +1237,31 @@ public class DM {
             mUtil.printLog(DEBUG, TAG, "[getMemberInfo] JSONException : " + e.getLocalizedMessage());
             e.printStackTrace();
             res = RES_FAIL;
+        }
+
+        return res;
+    }
+
+    public int setScheduleToDone(ScheduleItem item) {
+        mUtil.printLog(DEBUG, TAG, "[setScheduleToDone] item : " + item.getTitle());
+
+        int res = RES_SUCCESS;
+        String rawResult = "";
+        List<NameValuePair> params = new ArrayList<NameValuePair>();
+        params.add(new BasicNameValuePair("reqcmd", "set_plan_state"));
+        params.add(new BasicNameValuePair("id", CM.getInstance().getUserId()));
+        params.add(new BasicNameValuePair("plan_id", "" + item.getIdx()));
+        params.add(new BasicNameValuePair("plan_state", "" + ScheduleItem.CTG_DO));
+
+        rawResult = sendHttpPostMsg(BASE_URL_GGC, params);
+        mUtil.printLog(DEBUG, TAG, "[setScheduleToDone] rawResult : " + rawResult);
+
+        try {
+            JSONObject response = new JSONObject(rawResult);
+            res = response.getInt("resultcode");
+        } catch (JSONException e) {
+            mUtil.printLog(DEBUG, TAG, "[setScheduleToDone] JSONException : " + e.getLocalizedMessage());
+            e.printStackTrace();
         }
 
         return res;

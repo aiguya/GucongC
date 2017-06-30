@@ -4,6 +4,7 @@
     <string-array name="nav_menu">
         <item>@string/nav_target_tree</item>
         <item>@string/nav_score</item>
+        <item>@string/leaderboard</item>
         <item>@string/action_settings</item>
         <item>@string/log_off</item>
     </string-array>

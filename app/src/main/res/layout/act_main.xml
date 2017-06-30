@@ -1132,9 +1132,9 @@
         android:layout_width="200dp"
         android:layout_height="match_parent"
         android:layout_gravity="start"
-        android:background="#ffffff"
-        android:divider="#aaaaaa"
-        android:dividerHeight="2dp"
+        android:background="@color/lightcyan"
+        android:divider="@color/darkgray"
+        android:dividerHeight="1dp"
         android:orientation="vertical" />
     <!-- 좌측 네비게이션 메뉴 END-->
 </android.support.v4.widget.DrawerLayout>

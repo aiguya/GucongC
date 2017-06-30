@@ -1,10 +1,12 @@
 package com.smartware.gucongc;
 
 import android.annotation.SuppressLint;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
+import android.graphics.Color;
 import android.graphics.drawable.AnimationDrawable;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
@@ -22,6 +24,8 @@ import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -168,7 +172,7 @@ public class ActMain extends AppCompatActivity implements View.OnClickListener {
     private String mTodayOfMonth;
     private UserData mUserData = UserData.getInstance();
     private TargetTreeData mData;
-
+    private boolean isDialogShown = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -187,7 +191,7 @@ public class ActMain extends AppCompatActivity implements View.OnClickListener {
         mListOfListScheduleItem = new ArrayList<ArrayList<ScheduleItem>>();
 
         /**
-         * 7 : n(일, 월, ... 토) 
+         * 7 : n(일, 월, ... 토)
          * **/
         for (int i = 0; i < 7; i++) {
             ArrayList<ScheduleItem> listScheduleItem = new ArrayList<ScheduleItem>();
@@ -214,6 +218,8 @@ public class ActMain extends AppCompatActivity implements View.OnClickListener {
         updateWeek(WUT_TODAY);
     }
 
+    private ScheduleItem mSelectedScheduleItem;
+
 
     private void initView() {
         mUtils.printLog(DEBUG, TAG, "[initView]");
@@ -234,11 +240,6 @@ public class ActMain extends AppCompatActivity implements View.OnClickListener {
         mBtnAddSchedule = (ImageButton) findViewById(R.id.btn_float_btn);
 
         mListViewSchedule = (ListView) findViewById(R.id.list_schedule);
-
-/*        mTextSeeAttendance = (TextView) findViewById(R.id.text_see_attendance);
-        mTextSeeCourse = (TextView) findViewById(R.id.text_see_course);
-        mTextSeeTodo = (TextView) findViewById(R.id.text_see_todo);
-        mTextSeeAssignment = (TextView) findViewById(R.id.text_see_assignment);*/
 
         mImgLoadingAnim = (ImageView) findViewById(R.id.img_loading);
 
@@ -277,13 +278,18 @@ public class ActMain extends AppCompatActivity implements View.OnClickListener {
                         break;
                     case 1: //성적 관리
                         mIntent = new Intent(ActMain.this, ActManageRecord.class);
-                        mBundle.putParcelable(GraphData.GRAPH_DATA, mGraphData);
+                        mBundle.putSerializable(GraphData.GRAPH_DATA, mGraphData.getMainGraph());
+                        mBundle.putSerializable(GraphData.GRAPH_DATA_2ND, mGraphData.getDetailGraph());
+                        mUtils.printLog(DEBUG, TAG, "juho size :" + mGraphData.getDetailGraph().size());
                         mIntent.putExtra(Utils.BUNDLE, mBundle);
                         startActivity(mIntent);
                         break;
-                    case 2: //설정
+                    case 2: //리더보드
+                        startActivity(new Intent(ActMain.this, ActLeaderBoard.class));
                         break;
-                    case 3: //로그오프
+                    case 3: //설정
+                        break;
+                    case 4: //로그오프
                         mCM.setUserPwd("");
                         finish();
                         break;
@@ -375,6 +381,8 @@ public class ActMain extends AppCompatActivity implements View.OnClickListener {
         mUtils.printLog(DEBUG, TAG, "[onResume]");
         super.onResume();
         isExistPackage = mUtils.getPackageList(this, EBS_SMARTCOACH_PACKAGE);
+        isDialogShown = true;
+        updateWeek(WUT_TODAY);
         //jh do asynktask
         //new DoLoadGraphData().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
     }
@@ -448,13 +456,15 @@ public class ActMain extends AppCompatActivity implements View.OnClickListener {
             if (mTxtMyTarget.getText().length() < 1) {
                 mTxtMyTarget.setText(R.string.input_target);
             }
-            if(mGraphData != null && mGraphData.getMainGraph().size() > 0){
-              setGraphData();
+            if (mGraphData != null && mGraphData.getMainGraph().size() > 0) {
+                setGraphData();
             } else {
-              new DoLoadGraphData().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                new DoLoadGraphData().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
             }
-
-            new DoLoadTargetAndScore().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+            if (isDialogShown) {
+                new DoLoadTargetAndScore().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                isDialogShown = false;
+            }
         }
 
     }
@@ -482,7 +492,7 @@ public class ActMain extends AppCompatActivity implements View.OnClickListener {
                 mIntent = new Intent(this, ActManageRecord.class);
                 mBundle.putSerializable(GraphData.GRAPH_DATA, mGraphData.getMainGraph());
                 mBundle.putSerializable(GraphData.GRAPH_DATA_2ND, mGraphData.getDetailGraph());
-                mUtils.printLog(DEBUG,TAG, "juho size :" +mGraphData.getDetailGraph().size());
+                mUtils.printLog(DEBUG, TAG, "juho size :" + mGraphData.getDetailGraph().size());
                 mIntent.putExtra(Utils.BUNDLE, mBundle);
                 startActivity(mIntent);
                 break;
@@ -502,6 +512,7 @@ public class ActMain extends AppCompatActivity implements View.OnClickListener {
                     mBundle.putString(DialogEditScore.GOAL_SEQ, mData.getGoalSeq());
                     mBundle.putString(DialogEditScore.DIALOG_SCORE, "" + mData.getAvMyMonthScore());
                     new DialogEditScore(this, mBundle).show();
+                    isDialogShown = true;
                 }
                 break;
             case R.id.btn_month_pre:
@@ -634,27 +645,113 @@ public class ActMain extends AppCompatActivity implements View.OnClickListener {
         mListViewSchedule.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                ScheduleItem item = mListOfListScheduleItem.get(mSelectedDayOfWeek).get(position);
-                mUtils.printLog(DEBUG, TAG, "[setListViewScheduleItemClickListener] [onItemClick] position : " + position + ", item : " + item.toString());
+                mSelectedScheduleItem = mListOfListScheduleItem.get(mSelectedDayOfWeek).get(position);
+                mUtils.printLog(DEBUG, TAG, "[setListViewScheduleItemClickListener] [onItemClick] position : " + position + ", item : " + mSelectedScheduleItem.toString());
                 //jh
-                if (isExistPackage) {
-                    Intent intent = getPackageManager().getLaunchIntentForPackage(EBS_SMARTCOACH_PACKAGE);
-                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                    intent.putExtra("gugongc", true);
-                    UserData data = UserData.getInstance();
-                    intent.putExtra("user id", "ggc." + mCM.getUserId());
-                    intent.putExtra("user pw", mCM.getUserPwd());
-                    intent.putExtra("url", "http://badau.net/EBS/testview?folder_id=361383&member_id=ggc.ggc2&client_app_name=ebs_smartcoach_student");
-                    intent.putExtra("from", "[문제 풀기]");
-                    intent.putExtra("workbook name", "수학 5-1");
-                    startActivity(intent);
-                } else {
-                    String url = "market://details?id=" + EBS_SMARTCOACH_PACKAGE;
-                    Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
-                    startActivity(i);
+                if (mSelectedScheduleItem.getCategory() == ScheduleItem.CTG_PLAN) {
+                    showWarningDlg(mSelectedScheduleItem.getTitle(), mSelectedScheduleItem.getType());
                 }
             }
         });
+    }
+
+    private void showWarningDlg(String msg, final int type) {
+        mUtils.printLog(DEBUG, TAG, "[showWarningDlg] msg : " + msg + ", type : " + type);
+
+        final Dialog dialog = new Dialog(this, android.R.style.Theme_Translucent_NoTitleBar);
+        WindowManager.LayoutParams dlWindow = new WindowManager.LayoutParams();
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dlWindow.flags = WindowManager.LayoutParams.FLAG_DIM_BEHIND;
+        dlWindow.dimAmount = 0.5f;
+        dialog.getWindow().setAttributes(dlWindow);
+        dialog.setContentView(R.layout.dialog_no_title_bar_two_btn_small);
+        String title = "";
+        switch (type) {
+            case ScheduleItem.ST_COURSE:
+                title = getString(R.string.static_text_course) + " " + getString(R.string.schedule);
+                break;
+            case ScheduleItem.ST_TODO:
+                title = getString(R.string.static_text_todo) + " " + getString(R.string.schedule);
+                break;
+            case ScheduleItem.ST_ASSIGNMENT:
+                title = getString(R.string.static_text_assignment) + " " + getString(R.string.schedule);
+                break;
+            case ScheduleItem.ST_NONE:
+                title = getString(R.string.static_text_todo) + " " + getString(R.string.schedule);
+                break;
+            case ScheduleItem.ST_ATTENDANCE:
+                title = getString(R.string.attendance) + " " + getString(R.string.schedule);
+                break;
+
+        }
+
+
+        final TextView textTitle = (TextView) dialog.findViewById(R.id.txt_dialog_title);
+        textTitle.setText(title);
+
+        final TextView textMessage = (TextView) dialog.findViewById(R.id.txt_dialog_contents);
+        textMessage.setText(msg);
+        final TextView textMessage2 = (TextView) dialog.findViewById(R.id.txt_dialog_contents_2);
+        textMessage2.setText(getString(R.string.do_schedule));
+
+        final Button btnDlgOk = (Button) dialog.findViewById(R.id.btn_ok);
+        final Button btnDlgCancel = (Button) dialog.findViewById(R.id.btn_cancel);
+        btnDlgOk.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                switch (type) {
+                    case ScheduleItem.ST_COURSE:
+                        if (isExistPackage) {
+
+                            String url = String.format(Locale.getDefault(), "%s?folder_id=%s&member_id=%s&client_app_name=ebs_smartcoach_student",
+                                    CM.TEST_QUESTION_BASE_URL,
+                                    mSelectedScheduleItem.getFolderID(),
+                                    "ggc." + CM.getInstance().getUserId());
+                            Intent intent = getPackageManager().getLaunchIntentForPackage(EBS_SMARTCOACH_PACKAGE);
+                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                            intent.putExtra("gugongc", true);
+                            intent.putExtra("user id", "ggc." + mCM.getUserId());
+                            intent.putExtra("user pw", mCM.getUserPwd());
+                            //intent.putExtra("url", "http://badau.net/EBS/testview?folder_id=361383&member_id=ggc.ggc2&client_app_name=ebs_smartcoach_student");
+                            //mUtils.printLog(DEBUG,TAG,url);
+                            intent.putExtra("url", url);
+                            intent.putExtra("from", mSelectedScheduleItem.getFrom());
+                            intent.putExtra("workbook name", mSelectedScheduleItem.getTitle());
+                            startActivity(intent);
+                        } else {
+                            String url = "market://details?id=" + EBS_SMARTCOACH_PACKAGE;
+                            Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+                            startActivity(i);
+                        }
+                        dialog.dismiss();
+                        break;
+                    case ScheduleItem.ST_TODO:
+                        dialog.dismiss();
+                        new DoScheduleDone().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, mSelectedScheduleItem);
+                        break;
+                    case ScheduleItem.ST_ASSIGNMENT:
+                        dialog.dismiss();
+                        break;
+                    case ScheduleItem.ST_NONE:
+                        dialog.dismiss();
+                        new DoScheduleDone().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, mSelectedScheduleItem);
+                        break;
+                    case ScheduleItem.ST_ATTENDANCE:
+                        dialog.dismiss();
+                        new DoScheduleDone().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, mSelectedScheduleItem);
+                        break;
+                }
+
+            }
+        });
+        btnDlgCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+        dialog.show();
     }
 
     private void startLoadingAnimation() {
@@ -883,8 +980,10 @@ public class ActMain extends AppCompatActivity implements View.OnClickListener {
                             switch (row.getWrongAnswerNoteType()) {
                                 case ScheduleItem.WANT_NONE:
                                     vh.textWrongAnswerNote.setVisibility(View.INVISIBLE);
+                                    row.setFrom(getString(R.string.static_text_act_test_question_nav_bar_title_test_question));
                                     break;
                                 case ScheduleItem.WANT_ENABLE:
+                                    row.setFrom(getString(R.string.static_text_act_test_question_nav_bar_title_wrong_answer_note));
                                     vh.textWrongAnswerNote.setVisibility(View.VISIBLE);
                                     break;
                             }
@@ -1114,4 +1213,31 @@ public class ActMain extends AppCompatActivity implements View.OnClickListener {
 
     }
 
+    protected class DoScheduleDone extends AsyncTask<ScheduleItem, Void, Integer> {
+
+        @Override
+        protected void onPreExecute() {
+            mUtils.printLog(DEBUG, TAG, "[DoScheduleDo] [onPreExecute]");
+            startLoadingAnimation();
+            super.onPreExecute();
+        }
+
+        @Override
+        protected Integer doInBackground(ScheduleItem... items) {
+            mUtils.printLog(DEBUG, TAG, "[DoScheduleDo] [doInBackground]");
+            return DM.getInstance().setScheduleToDone(items[0]);
+        }
+
+        @Override
+        protected void onPostExecute(Integer integer) {
+            super.onPostExecute(integer);
+            mUtils.printLog(DEBUG, TAG, "[DoScheduleDo] [onPostExecute]");
+            stopLoadingAnimation();
+            new DoLoadScheduleList().executeOnExecutor(
+                    AsyncTask.THREAD_POOL_EXECUTOR,
+                    mStartDate,
+                    mEndDate
+            );
+        }
+    }
 }

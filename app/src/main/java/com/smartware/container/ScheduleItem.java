@@ -57,10 +57,12 @@ public class ScheduleItem implements Parcelable {
 	private int						mType;
 	private int						mCategory;
 	private long					mDate;
+	private long					mEndDate;
 	private int						mDayOfWeek;
 	private String					mTitle;
 	private int						mWrongAnswerNoteType;
 	private int						mCellType;
+	private int						mGroupID;
 	private String                  mFolderID;
 	private String                  mFrom;
 	private String                  mWorkbookName;
@@ -71,26 +73,30 @@ public class ScheduleItem implements Parcelable {
 		mType = ST_NONE;
 		mCategory = CTG_NONE;
 		mDate = 0L;
+		mEndDate = 0L;
 		mDayOfWeek = DOW_SUN;
 		mTitle = "";
 		mWrongAnswerNoteType = WANT_NONE;
 		mCellType = CT_ITEM;
+		mGroupID = 0;
 		mFolderID = "";
 		mFrom = "";
 		mWorkbookName= "";
 		mRepeat = "";
 	}
 
-	public ScheduleItem(int idx, int type, int category, long date, int dayOdWeek, String title,
-						int wrongAnswerNoteType, int cellType, String folderID, String from, String workbookName, String repeat) {
+	public ScheduleItem(int idx, int type, int category, long date,long endDate, int dayOdWeek, String title,
+						int wrongAnswerNoteType, int cellType, int groupID, String folderID, String from, String workbookName, String repeat) {
 		mIdx = idx;
 		mType = type;
 		mCategory = category;
 		mDate = date;
+		mEndDate = endDate;
 		mDayOfWeek = dayOdWeek;
 		mTitle = title;
 		mWrongAnswerNoteType = wrongAnswerNoteType;
 		mCellType = cellType;
+		mGroupID = groupID;
 		mFolderID = folderID;
 		mFrom = from;
 		mWorkbookName = workbookName;
@@ -102,10 +108,12 @@ public class ScheduleItem implements Parcelable {
 		mType = item.getType();
 		mCategory = item.getCategory();
 		mDate = item.getDate();
+		mEndDate = item.getEndDate();
 		mDayOfWeek = item.getDayOfWeek();
 		mTitle = item.getTitle();
 		mWrongAnswerNoteType = item.getWrongAnswerNoteType();
 		mCellType = item.getCellType();
+		mGroupID = item.getGroupID();
 		mFolderID = item.getFolderID();
 		mFrom = item.getFrom();
 		mWorkbookName = item.getWorkbookName();
@@ -117,10 +125,12 @@ public class ScheduleItem implements Parcelable {
 		mType = source.readInt();
 		mCategory = source.readInt();
 		mDate = source.readLong();
+		mEndDate = source.readLong();
 		mDayOfWeek = source.readInt();
 		mTitle = source.readString();
 		mWrongAnswerNoteType = source.readInt();
 		mCellType = source.readInt();
+		mGroupID = source.readInt();
 		mFolderID = source.readString();
 		mFrom = source.readString();
 		mWorkbookName = source.readString();
@@ -147,10 +157,12 @@ public class ScheduleItem implements Parcelable {
 		dest.writeInt(mType);
 		dest.writeInt(mCategory);
 		dest.writeLong(mDate);
+		dest.writeLong(mEndDate);
 		dest.writeInt(mDayOfWeek);
 		dest.writeString(mTitle);
 		dest.writeInt(mWrongAnswerNoteType);
 		dest.writeInt(mCellType);
+		dest.writeInt(mGroupID);
 		dest.writeString(mFolderID);
 		dest.writeString(mFrom);
 		dest.writeString(mWorkbookName);
@@ -169,15 +181,17 @@ public class ScheduleItem implements Parcelable {
 						+ "type : %d\n"
 						+ "category : %d\n"
 						+ "date : %s\n"
+						+ "end date : %s\n"
 						+ "day of week : %d\n"
 						+ "title : %s\n"
 						+ "wrongAnswerNoteType : %d\n"
-						+ "mCellType : %d\n"
-						+ "mFolderID : %s\n"
-						+ "mFrom : %s\n"
-						+ "mWorkbookName : %s\n"
-						+ "mRepeat : %s\n",
-				mIdx, mType, mCategory, getDateString(), mDayOfWeek, mTitle, mWrongAnswerNoteType, mCellType, mFolderID, mFrom, mWorkbookName, mRepeat ) ;
+						+ "cellType : %d\n"
+						+ "group id : %d\n"
+						+ "folderID : %s\n"
+						+ "from : %s\n"
+						+ "workbookName : %s\n"
+						+ "repeat : %s\n",
+				mIdx, mType, mCategory, getDateString(), getEndDateString(), mDayOfWeek, mTitle, mWrongAnswerNoteType, mCellType, mGroupID, mFolderID,  mFolderID, mFrom, mWorkbookName, mRepeat ) ;
 	}
 
 	public void setIdx(int idx) {
@@ -240,10 +254,18 @@ public class ScheduleItem implements Parcelable {
 		SimpleDateFormat formatter = new SimpleDateFormat(format, Locale.getDefault());
 		return formatter.format(mDate);
 	}
+	public String getEndDateString(String format) {
+		SimpleDateFormat formatter = new SimpleDateFormat(format, Locale.getDefault());
+		return formatter.format(mEndDate);
+	}
 
 	public String getDateString() {
 		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss", Locale.getDefault());
 		return formatter.format(mDate);
+	}
+	public String getEndDateString() {
+		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss", Locale.getDefault());
+		return formatter.format(mEndDate);
 	}
 
 	public void setDayOfWeek(int dayOfWeek) {
@@ -284,6 +306,23 @@ public class ScheduleItem implements Parcelable {
 
 	public void setRepeat(String repeat) {
 		this.mRepeat = repeat;
+	}
+
+
+	public int getGroupID() {
+		return mGroupID;
+	}
+
+	public void setGroupID(int mGroupID) {
+		this.mGroupID = mGroupID;
+	}
+
+	public long getEndDate() {
+		return mEndDate;
+	}
+
+	public void setEndDate(long mEndDate) {
+		this.mEndDate = mEndDate;
 	}
 }
 

@@ -32,6 +32,7 @@ import com.smartware.manager.DM;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 
 /**
@@ -45,7 +46,7 @@ public class ActEditScheduleSec extends AppCompatActivity {
     private static final String EXTRA_WORKBOOK_TITLE = "workbook title";
     private static final String EXTRA_WORK_URL = "workbook title";
 
-    private long mTodayDate;
+    private long  mTodayDate;
 
     private final int[] mArrayWeeksID = {
             R.id.txt_sunday,
@@ -72,7 +73,7 @@ public class ActEditScheduleSec extends AppCompatActivity {
     private String mStartDate;
     private String mStartTime;
     private int mSortdFolderIDSum;
-    private int mType;
+    private int mType = 1;
     private Workbook mWorkbook;
     private ScheduleItem mScheduleItem;
 
@@ -97,7 +98,9 @@ public class ActEditScheduleSec extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_navigate_before_white_36dp);
         mStartDate = new SimpleDateFormat("YYYY-MM-dd").format(new Date(mTodayDate));
+        mStartTime = new SimpleDateFormat("HH:mm").format(new Date(Calendar.getInstance().getTimeInMillis()));
         mUtil.printLog(DEBUG, TAG, "[initView] mStartDate : " + mStartDate);
+        mUtil.printLog(DEBUG, TAG, "[initView] mStartTime : " + mStartTime);
         mArrayWeeksTxt = new ArrayList<>();
         for (int id : mArrayWeeksID) {
             mArrayWeeksTxt.add((TextView) findViewById(id));
@@ -107,7 +110,18 @@ public class ActEditScheduleSec extends AppCompatActivity {
         stopLoadingAnimation();
 
         mPlatPanel = findViewById(R.id.view_repeat_setting);
+        mPlatPanel.setVisibility(View.GONE);
         mTimePicker = (TimePicker)findViewById(R.id.time_picker);
+
+        mTimePicker.setOnTimeChangedListener(new TimePicker.OnTimeChangedListener() {
+            @Override
+            public void onTimeChanged(TimePicker timePicker, int hour, int min) {
+                mUtil.printLog(DEBUG,TAG, "[onTimeChanged] time : " + hour + ":"+ min );
+                String h = hour == 0 ? "00" : "" + hour;
+                String m = min == 0 ? "00" : "" + min;
+                mStartTime = h + ":"+ m;
+            }
+        });
         mEditTitle = (EditText) findViewById(R.id.edit_schedule_title);
         mEditTitle.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
@@ -127,6 +141,7 @@ public class ActEditScheduleSec extends AppCompatActivity {
                         mEditTitle.setEnabled(false);
                         mBtnSelectSchedule.setClickable(true);
                         mBtnSelectSchedule.setText(R.string.edit_workbook);
+                        mType = ScheduleItem.ST_COURSE;
                         mBtnSelectSchedule.setBackgroundResource(R.drawable.btn_blue_plat);
                         mPlatPanel.setVisibility(View.GONE);
                         break;
@@ -136,6 +151,7 @@ public class ActEditScheduleSec extends AppCompatActivity {
                         mBtnSelectSchedule.setBackgroundResource(R.color.color_text_gray);
                         mBtnSelectSchedule.setClickable(false);
                         mPlatPanel.setVisibility(View.GONE);
+                        mType = ScheduleItem.ST_TODO;
                         break;
                     case R.id.rb_assignment:
                         mEditTitle.setEnabled(false);
@@ -143,6 +159,7 @@ public class ActEditScheduleSec extends AppCompatActivity {
                         mBtnSelectSchedule.setBackgroundResource(R.drawable.btn_blue_plat);
                         mBtnSelectSchedule.setClickable(true);
                         mPlatPanel.setVisibility(View.VISIBLE);
+                        mType = ScheduleItem.ST_ASSIGNMENT;
                         break;
                 }
             }
@@ -197,9 +214,16 @@ public class ActEditScheduleSec extends AppCompatActivity {
                 break;
             //저장
             case R.id.action_save:
-                Toast.makeText(this, "저장", Toast.LENGTH_SHORT).show();
+                if(mEditTitle.getText().length() < 0) {
+                    break;
+                }
+
                 mScheduleItem = new ScheduleItem();
                 mScheduleItem.setType(mType);
+                mScheduleItem.setTitle(mEditTitle.getText().toString());
+                if(mType == ScheduleItem.ST_COURSE){
+                    mScheduleItem.setFolderID(mSortedFolderID);
+                }
                 new DoMakeSchedule().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                 break;
         }
@@ -347,13 +371,21 @@ public class ActEditScheduleSec extends AppCompatActivity {
         protected Integer doInBackground(String... strings) {
             mUtil.printLog(DEBUG,TAG, "[DoMakeSchedule] [doInBackground]");
             String repeat = "";
+            int sum = 0;
             for(int i = 0; i < mRepeaArray.length ; i ++ ){
                 if(mRepeaArray[i]){
-                    if(i > 0){
+                    if(i > 0 && repeat.length() > 0){
                         repeat = repeat + "|";
                     }
                     repeat = repeat + i;
+                    sum ++;
                 }
+            }
+            if(sum == 0){
+                repeat = "0|1|2|3|4|5|6";
+            }
+            if(mScheduleItem.getType() == ScheduleItem.ST_TODO){
+                mSortdFolderIDSum = sum * 4;
             }
             mScheduleItem.setRepeat(repeat);
             int res = DM.getInstance().makeSchedule(mScheduleItem, mStartDate, mStartTime, mSortdFolderIDSum);
@@ -366,6 +398,7 @@ public class ActEditScheduleSec extends AppCompatActivity {
             stopLoadingAnimation();
             switch (integer){
                 case DM.RES_SUCCESS:
+                    Toast.makeText(ActEditScheduleSec.this, "저장", Toast.LENGTH_SHORT).show();
                     actFinish(RESULT_OK);
                     break;
                 case DM.RES_FAIL:

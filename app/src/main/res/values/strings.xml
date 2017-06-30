@@ -151,6 +151,7 @@
     <string name="find_pw">PW(비밀번호)찾기</string>
     <string name="wanna_finish">Back 버튼을 한번 더 누르면 종료됩니다.</string>
     <string name="edit_schdule">일정 입력</string>
+    <string name="schedule">일정</string>
     <string name="edit_category">항목 선택</string>
     <string name="schedule_name">일정 이름</string>
     <string name="edit_assignment">과제 선택</string>
@@ -174,6 +175,9 @@
     <string name="month_unit">달</string>
     <string name="select_icons">확인 아이콘을 선택하세요.</string>
     <string name="select_all">전체 선택</string>
+    <string name="do_schedule">일정을 수행하시겠습니까?</string>
+    <string name="static_text_act_test_question_nav_bar_title_test_question"><![CDATA["[문제 풀기]"]]></string>
+    <string name="static_text_act_test_question_nav_bar_title_wrong_answer_note"><![CDATA["[오답노트]"]]></string>
 
 
 </resources>

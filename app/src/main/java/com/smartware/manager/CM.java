@@ -21,6 +21,8 @@ public class CM {
     public static final float FONT_SIZE_DAY_OF_MONTH_SELECTED = 20.0f;
     public static final float FONT_SIZE_DAY_OF_MONTH_NOT_SELECTED = 14.0f;
 
+    public static final String			TEST_QUESTION_BASE_URL = "http://badau.net/EBS/testview";
+
     public static final String APP_ROOT_PATH = android.os.Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator + "smartware" + File.separator + "gugongc";
 
     public static final String CACHE_IMG_FILE_PATH = APP_ROOT_PATH + File.separator + ".cache";
