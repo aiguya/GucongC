@@ -456,7 +456,7 @@ public class ActMain extends AppCompatActivity implements View.OnClickListener {
             if (mTxtMyTarget.getText().length() < 1) {
                 mTxtMyTarget.setText(R.string.input_target);
             }
-            if (mGraphData != null && mGraphData.getMainGraph().size() > 0) {
+            if (mGraphData != null && mGraphData.getMainGraph().size() > 1) {
                 setGraphData();
             } else {
                 new DoLoadGraphData().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
