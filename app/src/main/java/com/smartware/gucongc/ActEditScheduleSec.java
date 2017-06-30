@@ -97,7 +97,7 @@ public class ActEditScheduleSec extends AppCompatActivity {
         getSupportActionBar().setBackgroundDrawable(new ColorDrawable(0xFF56aed2));
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_navigate_before_white_36dp);
-        mStartDate = new SimpleDateFormat("YYYY-MM-dd").format(new Date(mTodayDate));
+        mStartDate = new SimpleDateFormat("yyyy-MM-dd").format(new Date(mTodayDate));
         mStartTime = new SimpleDateFormat("HH:mm").format(new Date(Calendar.getInstance().getTimeInMillis()));
         mUtil.printLog(DEBUG, TAG, "[initView] mStartDate : " + mStartDate);
         mUtil.printLog(DEBUG, TAG, "[initView] mStartTime : " + mStartTime);

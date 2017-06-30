@@ -399,7 +399,9 @@ public class DM {
         params.add(new BasicNameValuePair("schooltype", studentGrade));
         params.add(new BasicNameValuePair("listall", "T"));
 
-        rawResult = sendHttpPostMsg(BASE_URL_GGC, params);
+        //rawResult = sendHttpPostMsg(BASE_URL, params);
+        //rawResult = sendHttpPostMsg(BASE_URL_GGC, params);
+        rawResult = sendHttpPostMsg("http://qrh.kr/App/GGCAPI.aspx", params);
         mUtil.printLog(DEBUG, TAG, "[getWorkbookList] rawResult : " + rawResult);
 
         list.clear();
