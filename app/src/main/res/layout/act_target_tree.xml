@@ -6,9 +6,9 @@
     android:orientation="vertical">
 
     <ScrollView
-        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -95,7 +95,7 @@
                             android:gravity="center"
                             android:text="@string/my_gugongc_month"
                             android:textColor="@color/color_text_gray"
-                            android:textSize="12dp" />
+                            android:textSize="14dp" />
 
                         <TextView
                             android:id="@+id/text_target"
@@ -170,14 +170,13 @@
                     android:background="@color/color_white"
                     android:gravity="center_vertical"
                     android:orientation="horizontal"
-                    android:paddingTop="10dp">
+                    android:paddingTop="5dp">
 
                     <TextView
                         android:id="@+id/txt_start_date"
                         android:layout_width="wrap_content"
                         android:layout_height="20dp"
                         android:layout_marginLeft="20dp"
-                        android:text="2017년 4월 3일"
                         android:textColor="@color/color_text_medium_gray"
                         android:textSize="16dp" />
 
@@ -190,17 +189,34 @@
                         android:textSize="16dp" />
 
                     <View
-                        android:layout_width="match_parent"
+                        android:layout_width="0dp"
                         android:layout_height="1dp"
-                        android:layout_marginLeft="20dp"
-                        android:layout_marginRight="20dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
+                        android:layout_weight="1"
                         android:background="@color/color_common_gray" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="12dp"
+                        android:text="@string/coach"
+                        android:textColor="@color/color_text_medium_gray"
+                        android:textSize="10dp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="11dp"
+                        android:text="@string/parent"
+                        android:textColor="@color/color_text_medium_gray"
+                        android:textSize="10dp" />
 
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="220dp"
+                    android:layout_height="242dp"
                     android:layout_marginLeft="5dp"
                     android:layout_marginRight="5dp"
                     android:orientation="horizontal">
@@ -1329,16 +1345,16 @@
     </ScrollView>
 
     <ImageView
-        android:elevation="2dp"
-        android:visibility="gone"
         android:id="@+id/img_loading"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_centerInParent="true"
-        android:src="@drawable/loading_anim"
-        android:scaleType="centerInside"
-        android:clickable="true"
         android:background="@color/color_translate_gray"
-        android:contentDescription="@string/app_name" />
+        android:clickable="true"
+        android:contentDescription="@string/app_name"
+        android:elevation="2dp"
+        android:scaleType="centerInside"
+        android:src="@drawable/loading_anim"
+        android:visibility="gone" />
 
 </RelativeLayout>

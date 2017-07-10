@@ -453,14 +453,8 @@ public class ActMain extends AppCompatActivity implements View.OnClickListener {
         super.onWindowFocusChanged(hasFocus);
         mUtils.printLog(DEBUG, TAG, "[onWindowFocusChanged]");
         if (hasFocus) {
-            if (mTxtMyTarget.getText().length() < 1) {
-                mTxtMyTarget.setText(R.string.input_target);
-            }
-            if (mGraphData != null && mGraphData.getMainGraph().size() > 1) {
-                setGraphData();
-            } else {
-                new DoLoadGraphData().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-            }
+            new DoLoadGraphData().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+
             if (isDialogShown) {
                 new DoLoadTargetAndScore().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                 isDialogShown = false;
@@ -470,6 +464,9 @@ public class ActMain extends AppCompatActivity implements View.OnClickListener {
     }
 
     public void setGraphData() {
+        if (mGraphData.getMainGraph().size() < 1) {
+            return;
+        }
         mMaxGraphWidth = mLayoutGraph.getWidth();
         mUtils.printLog(DEBUG, TAG, "[setGraphData] mMaxGraphWidth = " + mMaxGraphWidth);
         mUtils.printLog(DEBUG, TAG, "[setGraphData] GraphData.getMainGraph() size  = " + mGraphData.getMainGraph().size());
@@ -507,7 +504,7 @@ public class ActMain extends AppCompatActivity implements View.OnClickListener {
                 mUtils.printLog(DEBUG, TAG, "[onClick] score clicked");
                 break;
             case R.id.txt_todays_score:
-                if (mTxtMyTarget.length() > 0) {
+                if (mData.getGoalSeq().length() > 0) {
                     mBundle.putString(DialogEditScore.DIALOG_DATE, mTodayOfMonth);
                     mBundle.putString(DialogEditScore.GOAL_SEQ, mData.getGoalSeq());
                     mBundle.putString(DialogEditScore.DIALOG_SCORE, "" + mData.getAvMyMonthScore());
@@ -1173,6 +1170,9 @@ public class ActMain extends AppCompatActivity implements View.OnClickListener {
                 public void run() {
                     mTxtMyTarget.setText(mData.getTarget());
                     mTxtTodaysScore.setText("" + mData.getAvMyMonthScore());
+                    if (mTxtMyTarget.getText().length() < 1) {
+                        mTxtMyTarget.setText(R.string.input_target);
+                    }
                 }
             });
             stopLoadingAnimation();

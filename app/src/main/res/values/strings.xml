@@ -28,13 +28,13 @@
     <string name="log_in">로그인</string>
     <string name="find_idpw">아이디 / 비밀번호 찾기</string>
     <string name="join">회원가입</string>
-    <string name="my_gugongc_month">이번달 개발 중인 공부시스템</string>
+    <string name="my_gugongc_month">이 달의 미션</string>
     <string name="todays_evaluation">오늘의 평가</string>
     <string name="point">점</string>
     <string name="text_input">입력</string>
     <string name="start">시작</string>
     <string name="week_1">1주</string>
-    <string name="developed_gongc">개발한 공부 시스템</string>
+    <string name="developed_gongc">수행한 미션</string>
     <string name="todays_score">오늘의 평가점수</string>
     <string name="input_score">평가점수 입력</string>
     <string name="log_off">로그오프</string>
@@ -178,6 +178,8 @@
     <string name="do_schedule">일정을 수행하시겠습니까?</string>
     <string name="static_text_act_test_question_nav_bar_title_test_question"><![CDATA["[문제 풀기]"]]></string>
     <string name="static_text_act_test_question_nav_bar_title_wrong_answer_note"><![CDATA["[오답노트]"]]></string>
+    <string name="parent">부모님</string>
+    <string name="coach">선생님</string>
 
 
 </resources>

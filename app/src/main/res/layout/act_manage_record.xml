@@ -188,7 +188,7 @@
 
                         <View
                             android:id="@+id/view_my_score_bar2"
-                            android:layout_width="180dp"
+                            android:layout_width="0dp"
                             android:layout_height="8dp"
                             android:background="@color/color_my_score"
                             android:elevation="1dp" />
@@ -198,7 +198,6 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="1dp"
-                            android:text="50"
                             android:textSize="8dp" />
                     </LinearLayout>
 
@@ -210,7 +209,7 @@
 
                         <View
                             android:id="@+id/view_overall_av_bar2"
-                            android:layout_width="150dp"
+                            android:layout_width="0dp"
                             android:layout_height="8dp"
                             android:background="@color/color_overall_av"
                             android:elevation="1dp" />
@@ -220,7 +219,6 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="1dp"
-                            android:text="50"
                             android:textSize="8dp" />
                     </LinearLayout>
                 </LinearLayout>
@@ -263,7 +261,7 @@
 
                         <View
                             android:id="@+id/view_my_score_bar1"
-                            android:layout_width="180dp"
+                            android:layout_width="0dp"
                             android:layout_height="8dp"
                             android:background="@color/color_my_score"
                             android:elevation="1dp" />
@@ -273,7 +271,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="1dp"
-                            android:text="50"
+
                             android:textSize="8dp" />
                     </LinearLayout>
 
@@ -285,7 +283,7 @@
 
                         <View
                             android:id="@+id/view_overall_av_bar1"
-                            android:layout_width="150dp"
+                            android:layout_width="0dp"
                             android:layout_height="8dp"
                             android:background="@color/color_overall_av"
                             android:elevation="1dp" />
@@ -295,7 +293,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="1dp"
-                            android:text="50"
+
                             android:textSize="8dp" />
                     </LinearLayout>
                 </LinearLayout>
@@ -337,7 +335,7 @@
 
                         <View
                             android:id="@+id/view_my_score_bar3"
-                            android:layout_width="180dp"
+                            android:layout_width="0dp"
                             android:layout_height="8dp"
                             android:background="@color/color_my_score"
                             android:elevation="1dp" />
@@ -347,7 +345,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="1dp"
-                            android:text="50"
+
                             android:textSize="8dp" />
                     </LinearLayout>
 
@@ -359,7 +357,7 @@
 
                         <View
                             android:id="@+id/view_overall_av_bar3"
-                            android:layout_width="150dp"
+                            android:layout_width="0dp"
                             android:layout_height="8dp"
                             android:background="@color/color_overall_av"
                             android:elevation="1dp" />
@@ -369,7 +367,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="1dp"
-                            android:text="50"
+
                             android:textSize="8dp" />
                     </LinearLayout>
                 </LinearLayout>
@@ -411,7 +409,7 @@
 
                         <View
                             android:id="@+id/view_my_score_bar4"
-                            android:layout_width="180dp"
+                            android:layout_width="0dp"
                             android:layout_height="8dp"
                             android:background="@color/color_my_score"
                             android:elevation="1dp" />
@@ -421,7 +419,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="1dp"
-                            android:text="50"
+
                             android:textSize="8dp" />
                     </LinearLayout>
 
@@ -433,7 +431,7 @@
 
                         <View
                             android:id="@+id/view_overall_av_bar4"
-                            android:layout_width="150dp"
+                            android:layout_width="0dp"
                             android:layout_height="8dp"
                             android:background="@color/color_overall_av"
                             android:elevation="1dp" />
@@ -443,7 +441,6 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="1dp"
-                            android:text="50"
                             android:textSize="8dp" />
                     </LinearLayout>
                 </LinearLayout>
@@ -485,7 +482,7 @@
 
                         <View
                             android:id="@+id/view_my_score_bar5"
-                            android:layout_width="180dp"
+                            android:layout_width="0dp"
                             android:layout_height="8dp"
                             android:background="@color/color_darkorange"
                             android:elevation="1dp" />
@@ -495,7 +492,6 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="1dp"
-                            android:text="50"
                             android:textSize="8dp" />
                     </LinearLayout>
 
@@ -507,7 +503,7 @@
 
                         <View
                             android:id="@+id/view_overall_av_bar5"
-                            android:layout_width="150dp"
+                            android:layout_width="0dp"
                             android:layout_height="8dp"
                             android:background="@color/color_overall_av"
                             android:elevation="1dp" />
@@ -517,7 +513,6 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="1dp"
-                            android:text="50"
                             android:textSize="8dp" />
                     </LinearLayout>
                 </LinearLayout>

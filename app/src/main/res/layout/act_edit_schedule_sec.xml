@@ -76,7 +76,7 @@
                         android:layout_weight="1"
                         android:background="@color/color_schadule_theme_assignment"
                         android:gravity="center"
-                        android:text="@string/static_text_assignment"
+                        android:text="@string/learning_system"
                         android:textColor="@color/very_dark_gray"
                         android:textSize="15dp" />
 

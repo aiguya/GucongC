@@ -111,7 +111,7 @@ public class FragmentGraph extends Fragment {
 
     public void setGraphValues(View view, int value, int maxGraphHight) {
         ViewGroup.LayoutParams layoutParams = view.getLayoutParams();
-        //mUtils.printLog(DEBUG, TAG, "[setGraphValues] score = " + value);
+        mUtils.printLog(DEBUG, TAG, "[setGraphValues] score = " + value);
         if (value > 100) {
             layoutParams.height = maxGraphHight;
         } else {

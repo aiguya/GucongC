@@ -49,8 +49,8 @@ public class DM {
     public static final int RES_SUCCESS = 0;
     public static final int RES_FAIL = -1;
 
-    public static final String BASE_URL = "http://qrh.kr/App/EBSAPI.aspx";
-    //public static final String BASE_URL = "http://smartware.asuscomm.com:3086/App/EBSAPI.aspx";
+    //public static final String BASE_URL = "http://qrh.kr/App/EBSAPI.aspx";
+    public static final String BASE_URL = "http://smartware.asuscomm.com:3086/App/EBSAPI.aspx";
     //public static final String			BASE_URL_GGC = "http://qrh.kr/App/GGCAPI.aspx";
     public static final String BASE_URL_GGC = "http://smartware.asuscomm.com:3086/App/GGCAPI.aspx";
 
@@ -238,6 +238,7 @@ public class DM {
         int res = RES_SUCCESS;
         String rawResult = "";
         String userId = CM.getInstance().getUserId();
+        mUtil.printLog(DEBUG, TAG, "[getScheduleList] userId : " + userId);
 
         List<NameValuePair> params = new ArrayList<NameValuePair>();
 
@@ -276,6 +277,9 @@ public class DM {
                 item.setCellType(ScheduleItem.CT_ITEM);
                 list.add(item);
             }
+        } catch (NumberFormatException e) {
+            mUtil.printLog(DEBUG, TAG, "[getScheduleList] NumberFormatException : " + e.getLocalizedMessage());
+            e.printStackTrace();
         } catch (JSONException e) {
             mUtil.printLog(DEBUG, TAG, "[getScheduleList] JSONException : " + e.getLocalizedMessage());
             e.printStackTrace();
@@ -370,6 +374,9 @@ public class DM {
             item.setTenPointRaiseUrl(String.format(locale, "%s?folder_id=%s&member_id=%s", TEN_POINT_RAISE_BASE_URL, obj.getString("FOLDER_ID"), userId));
             item.setRelease("");
             item.setEvalustion("");
+        } catch (NumberFormatException e) {
+            mUtil.printLog(DEBUG, TAG, "[getWorkbook] NumberFormatException : " + e.getLocalizedMessage());
+            e.printStackTrace();
         } catch (JSONException e) {
             mUtil.printLog(DEBUG, TAG, "[getWorkbook] JSONException : " + e.getLocalizedMessage());
             e.printStackTrace();
@@ -448,6 +455,9 @@ public class DM {
                     list.add(new Workbook(item));
                 }
             }
+        } catch (NumberFormatException e) {
+            mUtil.printLog(DEBUG, TAG, "[getWorkbookList] NumberFormatException : " + e.getLocalizedMessage());
+            e.printStackTrace();
         } catch (JSONException e) {
             mUtil.printLog(DEBUG, TAG, "[getWorkbookList] JSONException : " + e.getLocalizedMessage());
             e.printStackTrace();
@@ -469,7 +479,10 @@ public class DM {
         params.add(new BasicNameValuePair("folderid", String.valueOf(workbookId)));
         params.add(new BasicNameValuePair("testid", preTestId));
 
-        rawResult = sendHttpPostMsg(BASE_URL, params);
+        //jh
+        //rawResult = sendHttpPostMsg(BASE_URL, params);
+        rawResult = sendHttpPostMsg("http://qrh.kr/App/EBSAPI.aspx", params);
+
         mUtil.printLog(DEBUG, TAG, "[getMyChapterList] rawResult : " + rawResult);
 
         list.clear();
@@ -600,7 +613,9 @@ public class DM {
                 item.getRankHistoryPeriod().add(nullCheck(obj.getString("HISTORY")));
             }
 
-
+        } catch (NumberFormatException e) {
+            mUtil.printLog(DEBUG, TAG, "[getLeaderboardData] NumberFormatException : " + e.getLocalizedMessage());
+            e.printStackTrace();
         } catch (JSONException e) {
             mUtil.printLog(DEBUG, TAG, "[getLeaderboardData] JSONException : " + e.getLocalizedMessage());
             e.printStackTrace();
@@ -637,8 +652,11 @@ public class DM {
             for (int i = 0; i < jsonArray.length(); i++) {
                 JSONObject obj = (JSONObject) jsonArray.get(i);
                 GraphValue value = new GraphValue();
+                String per = nullCheck(obj.getString("PER"));
+                if(per.length() > 0){
+                    value.setPercent(Integer.parseInt(per));
+                }
                 value.setGubun(nullCheck(obj.getString("GUBUN")));
-                value.setPercent(Integer.parseInt(nullCheck(obj.getString("PER"))));
                 list0.add(value);
             }
             item.setMainGraph(list0);
@@ -647,13 +665,22 @@ public class DM {
                 GraphValue value = new GraphValue();
                 value.setGubun(nullCheck(obj.getString("GUBUN")));
                 value.setDate(nullCheck(obj.getString("MONTH")));
-                value.setPercent(Integer.parseInt(nullCheck(obj.getString("PER"))));
-                value.setAll_av(Integer.parseInt(nullCheck(obj.getString("ALL_AVG"))));
+                String per = nullCheck(obj.getString("PER"));
+                String all_avg = nullCheck(obj.getString("ALL_AVG"));
+                if(per.length() > 0){
+                    value.setPercent(Integer.parseInt(per));
+                }
+                if(all_avg.length() > 0){
+                    value.setAll_av(Integer.parseInt(all_avg));
+                }
                 list1.add(value);
             }
             item.setDetailGraph(list1);
             mUtil.printLog(DEBUG, TAG, "[getLeaderboardData] setDetailGraph : " + item.getDetailGraph().size());
 
+        } catch (NumberFormatException e) {
+            mUtil.printLog(DEBUG, TAG, "[getLeaderboardData] NumberFormatException : " + e.getLocalizedMessage());
+            e.printStackTrace();
         } catch (JSONException e) {
             mUtil.printLog(DEBUG, TAG, "[getLeaderboardData] JSONException : " + e.getLocalizedMessage());
             e.printStackTrace();
@@ -731,6 +758,10 @@ public class DM {
                 dataList.add(item);
             }
 
+        } catch (NumberFormatException e) {
+            mUtil.printLog(DEBUG, TAG, "[getTargetTreeData] NumberFormatException : " + e.getLocalizedMessage());
+            e.printStackTrace();
+
         } catch (JSONException e) {
             mUtil.printLog(DEBUG, TAG, "[getTargetTreeData] JSONException : " + e.getLocalizedMessage());
             e.printStackTrace();
@@ -761,6 +792,9 @@ public class DM {
             JSONObject response = new JSONObject(rawResult);
             res = response.getInt("resultcode");
             JSONArray jsonArray = new JSONArray(response.getString("list"));
+            if(jsonArray.length() < 1){
+                return RES_FAIL;
+            }
             JSONObject obj = (JSONObject) jsonArray.get(0);
 
             data.setTarget(nullCheck(obj.getString("GOAL_TITLE")));
@@ -774,9 +808,11 @@ public class DM {
                 point = "0";
             }
             data.setAvMyMonthScore(Integer.parseInt(point));
-
+        } catch (NumberFormatException e) {
+            mUtil.printLog(DEBUG, TAG, "[getTargetData] NumberFormatException : " + e.getLocalizedMessage());
+            e.printStackTrace();
         } catch (JSONException e) {
-            mUtil.printLog(DEBUG, TAG, "[getTargetTreeData] JSONException : " + e.getLocalizedMessage());
+            mUtil.printLog(DEBUG, TAG, "[getTargetData] JSONException : " + e.getLocalizedMessage());
             e.printStackTrace();
             res = RES_FAIL;
         }

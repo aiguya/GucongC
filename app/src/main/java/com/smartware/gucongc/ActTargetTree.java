@@ -54,7 +54,7 @@ public class ActTargetTree extends AppCompatActivity implements View.OnClickList
     private ArrayList<TargetTreeDate> mScoreDayList;
     //private ArrayList<Integer> mCheckList;
     private ArrayList<TargetTreeDate> mCheckList;
-    private int[] checkArray = {1, 1, 2, 2, 1, 0, 0, -1, -1, -1, -1, -1}; //테스트용
+    private int[] checkArray = {-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1}; //테스트용
 
 
     private CM mCM = CM.getInstance();
@@ -124,11 +124,12 @@ public class ActTargetTree extends AppCompatActivity implements View.OnClickList
     }
 
     private void setOnItemClickListener() {
+
         mGridViewDay.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 mUtils.printLog(DEBUG, TAG, "[setOnItemClickListener] [onItemClick] index i : " + i);
-                if ((int) mGridViewAdapter.getItem(i) < 1) return;
+                if ((int) mGridViewAdapter.getItem(i) < 1 || mData.getGoalSeq().length() < 1) return;
 
                 String strToday = "" + mGridViewAdapter.getItem(i);
                 int today = (int) mGridViewAdapter.getItem(i);
@@ -155,9 +156,8 @@ public class ActTargetTree extends AppCompatActivity implements View.OnClickList
         mGridViewCheck.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                if(i % 2 == 0){
-                    return;
-                }
+                if (i % 2 == 0 || mData.getGoalSeq().length() < 1) return;
+
                 Bundle bundle = new Bundle();
                 bundle.putString(DialogCheck.GOAL_SEQ, mData.getGoalSeq());
                 bundle.putInt(DialogCheck.DIALOG_INDEX, i);
@@ -224,9 +224,7 @@ public class ActTargetTree extends AppCompatActivity implements View.OnClickList
     protected void onResume() {
         super.onResume();
         new DoGetTargetTreeData().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-        if (mTxtTarget.getText().length() < 1) {
-            mTxtTarget.setText(R.string.input_target);
-        }
+
         mTxtMyScore.setText("" + mData.getAvMyMonthScore());
     }
 
@@ -483,6 +481,7 @@ public class ActTargetTree extends AppCompatActivity implements View.OnClickList
                     }
                 });
             } else {
+                mTxtTarget.setText(R.string.input_target);
 
             }
             stopLoadingAnimation();
